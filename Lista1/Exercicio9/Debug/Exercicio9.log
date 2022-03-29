@@ -1,3 +1,3 @@
 ﻿  Source.cpp
-D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Exercicio9\Source.cpp(167,2): warning C4305: 'inicializando': truncamento de 'double' para 'GLfloat'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Exercicio9\Source.cpp(136,2): warning C4305: 'inicializando': truncamento de 'double' para 'GLfloat'
   Exercicio9.vcxproj -> D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Debug\Exercicio9.exe

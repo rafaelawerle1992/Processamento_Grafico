@@ -39,7 +39,7 @@ int main()
 	glfwInit();
 
 	// Criação da janela GLFW
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Ola Triangulo! - Rafaela Werle", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Lista1 - Exercício5 - Rafaela Werle", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
 	// Fazendo o registro da função de callback para a janela GLFW
@@ -99,12 +99,13 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		*/
 		
-		/*
+		
 		//b. Apenas com contorno  
 		// CONTORNO - GL_LINE_LOOP
 		glUniform4f(colorLoc, 0.0f, 1.0f, 0.0f, 1.0f); //enviando cor para variável uniform inputColor
-		glDrawArrays(GL_LINE_LOOP, 0, 6);
-		*/
+		glDrawArrays(GL_LINE_LOOP, 0, 3);
+		glDrawArrays(GL_LINE_LOOP, 3, 3);
+		
 		
 		/*
 		//c. Apenas como pontos  
@@ -113,7 +114,7 @@ int main()
 		glDrawArrays(GL_POINTS, 0, 6);
 		*/
 
-		
+		/*
 		//d. Com as 3 formas de desenho juntas 
 		// POLIGONO - GL_TRIANGLES
 		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
@@ -124,7 +125,7 @@ int main()
 		// PONTOS - GL_POINTS
 		glUniform4f(colorLoc, 1.0f, 0.0f, 0.0f, 1.0f); //enviando cor para variável uniform inputColor
 		glDrawArrays(GL_POINTS, 0, 6);
-
+		*/
 				
 		glBindVertexArray(0);
 

@@ -1,5 +1,4 @@
 ﻿  Source.cpp
-D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Exercicio7\Source.cpp(21,24): warning C4305: 'inicializando': truncamento de 'double' para 'float'
-D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Exercicio7\Source.cpp(68,42): warning C4305: 'argumento': truncamento de 'double' para 'float'
-D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Exercicio7\Source.cpp(129,15): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Exercicio7\Source.cpp(23,24): warning C4305: 'inicializando': truncamento de 'double' para 'float'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Exercicio7\Source.cpp(71,18): warning C4305: 'inicializando': truncamento de 'double' para 'float'
   Exercicio7.vcxproj -> D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Listas de exercício\Lista1\Debug\Exercicio7.exe
