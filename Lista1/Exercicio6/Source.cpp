@@ -1,12 +1,21 @@
 /* Lista 1 - Exercicio 6
 * Rafaela Werle
 * 
-* Circulo completo - ativar as linhas 70 e 101
-* a. Octagno - ativar as linhas 79 e 113
-* b. Pentagono - ativar linhas 83 e 113
-* c. PacMan - ativar as linhas 70 e 117
-* d. Fatia de Pizza - ativar as linhas 70 e 121
-* e. Estrela - não consegui fazer
+* Atenção as linhas que ativam cada uma das formas. 
+* Quando remover comentários de uma forma, deve-se comentar as linhas que ativam as outras.
+* 
+* Circulo completo - ativar as linhas 75 e 117 (já deixei nesse padrão)
+* 
+* a. Octagno - ativar as linhas 79 e 121
+* b. Pentagono - ativar linhas 83 e 121
+* c. PacMan - ativar as linhas 75 e 125
+* d. Fatia de Pizza - ativar as linhas 75 e 129
+* e. Estrela - ativar as linhas 87, 88 e 133.
+* 
+* Na função GenerateCircle, fiz dois laços FOR.
+* 
+* Laço FOR da linha 167 até 187 - EXCLUSIVO ESTRELA
+* Laço FOR da linha 189 até 196 - Demais formas.
  */
 
 #include <iostream>
@@ -68,22 +77,27 @@ int main()
 		// Compilando e buildando o programa de shader
 	Shader shader("../shaders/hello.vs","../shaders/hello.fs");
 
-
-	// Gerando um buffer simples, com a geometria de um circulo
+		// Gerando um buffer simples, com a geometria de um circulo
+	float raio = 0.5;
 	
-	/* //CIRCULO COMPLETO / PACMAN / FATIA DE PIZZA
+	//CIRCULO COMPLETO / PACMAN / FATIA DE PIZZA
 	int nPoints = 50;
-	*/
-
-	/* //OCTAGONO 
-	int nPoints = 8;
-	*/
-
-	 //PENTAGONO
-	int nPoints = 5;
 	
 
-	GLuint VAO = generateCircle(0.5, nPoints);
+	//OCTAGONO 
+	//int nPoints = 8;
+	
+
+	//PENTAGONO
+	//int nPoints = 5;
+	
+
+	//ESTRELA
+	//int nPoints = 10;
+	//raio = 0.3;
+
+
+	GLuint VAO = generateCircle(raio, nPoints);
 
 		
 	// Enviando a cor desejada (vec4) para o fragment shader
@@ -102,28 +116,31 @@ int main()
 		glClearColor(0.8f, 0.8f, 0.8f, 1.0f); //cor de fundo
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glPointSize(10);
+
 		// Chamada de desenho - drawcall
 		glBindVertexArray(VAO);
 		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
 
-		/* //CIRCULO COMPLETO		
-		glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints+2);
-		*/
-
-		 //OCTAGONO / PENTAGONO
+		//CIRCULO COMPLETO		
 		glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints+2);
 		
 
-		/* //PACMAN		
-		glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints-2);
-		*/
+		//OCTAGONO / PENTAGONO
+		//glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints+2);
+		
 
-		/* //FATIA DE PIZZA		
-		glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints/5);
-		*/
+		//PACMAN		
+		//glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints-2);
+		
 
-		/*ESTRELA*/
+		//FATIA DE PIZZA		
+		//glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints/5);
+		
 
+		//ESTRELA
+		//glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints+2);
+		
 							
 		glBindVertexArray(0);
 
@@ -155,6 +172,29 @@ int generateCircle(float raio, int nPoints)
 
 	float angle = 0.0;
 	float slice = 2 * pi / (GLfloat) nPoints;
+	
+	/*     //da linha 168 até a linha 187, feitas exclusivamente para geração da ESTRELA
+	float raio2 = raio * 2;  
+	bool ponta = false; 
+
+	for (int i = 3; i < totalSize; i += 3)
+	{                                            
+		if (ponta) {                                
+			vertices[i] = raio2 * cos(angle);
+			vertices[i + 1] = raio2 * sin(angle);
+			vertices[i + 2] = 0.0;
+			ponta = false;
+		}
+		else {                                     
+			vertices[i] = raio * cos(angle);
+			vertices[i + 1] = raio * sin(angle);
+			vertices[i + 2] = 0.0;	                       
+			ponta = true;                            
+		}                                           
+		
+		angle += slice;
+	}*/
+
 	for (int i = 3; i < totalSize; i += 3)
 	{
 		vertices[i] = raio * cos(angle);
