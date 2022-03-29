@@ -2,6 +2,8 @@
 
 ## Entrega da Lista de Exercícios 1 
 
+Executáveis na pasta Debug
+
 
 Necessário configurar as propriedades de diretório de dependencias. Pasta de dependencias está na raiz do projeto. (Nível acima deste diretório)
 
