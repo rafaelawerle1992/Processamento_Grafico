@@ -5,7 +5,7 @@
 Executáveis na pasta Debug
 
 
-Necessário configurar as propriedades de diretório de dependencias. Pasta de dependencias está na raiz do projeto. (Nível acima deste diretório)
+Necessário configurar as propriedades de diretório de dependencias. Pasta de dependencias está na raiz do repositório. (Nível acima deste diretório)
 
 - ../../dependencies/glfw-3.3.4.bin.WIN32/include;../../dependencies/GLAD/include
 
