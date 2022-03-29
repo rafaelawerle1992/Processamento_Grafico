@@ -12,7 +12,9 @@ Necessário configurar as propriedades de diretório de dependencias. Pasta de d
 - glfw3.lib;opengl32.lib;%(AdditionalDependencies)
 
 
+Eu criei uma Solução chamada Lista1 e cada exercício é um projeto diferente.
 
+Exercícios 5 e 6, detalhei no inicío do código quais as linhas devem ser ativas e/ou comentadas para executar cada uma das opções (a, b, c, d, e).
 
 
 Figura utilizada no exercício 9.
