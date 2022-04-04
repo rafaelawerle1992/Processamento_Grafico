@@ -21,37 +21,37 @@ using namespace std;
 // SHADER
 #include "Shader.h"
 
-// Protótipo da função de callback de teclado
+// ProtÃ³tipo da funÃ§Ã£o de callback de teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-// Protótipos das funções
+// ProtÃ³tipos das funÃ§Ãµes
 int setupGeometry();
 
-// Dimensões da janela (pode ser alterado em tempo de execução)
+// DimensÃµes da janela (pode ser alterado em tempo de execuÃ§Ã£o)
 const GLuint WIDTH = 800, HEIGHT = 600;
 
 
-// Função MAIN
+// FunÃ§Ã£o MAIN
 int main()
 {
-	// Inicialização da GLFW
+	// InicializaÃ§Ã£o da GLFW
 	glfwInit();
 
-	// Criação da janela GLFW
+	// CriaÃ§Ã£o da janela GLFW
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Lista2 - Rafaela Werle", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
-	// Fazendo o registro da função de callback para a janela GLFW
+	// Fazendo o registro da funÃ§Ã£o de callback para a janela GLFW
 	glfwSetKeyCallback(window, key_callback);
 
-	// GLAD: carrega todos os ponteiros d funções da OpenGL
+	// GLAD: carrega todos os ponteiros d funÃ§Ãµes da OpenGL
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 
 	}
 
-	// Obtendo as informações de versão
+	// Obtendo as informaÃ§Ãµes de versÃ£o
 	const GLubyte* renderer = glGetString(GL_RENDERER); /* get renderer string */
 	const GLubyte* version = glGetString(GL_VERSION); /* version as a string */
 	cout << "Renderer: " << renderer << endl;
@@ -60,7 +60,7 @@ int main()
 	// Compilando e buildando o programa de shader
 	Shader shader("../shaders/ortho.vs","../shaders/ortho.fs");
 
-	// Gerando um buffer simples, com a geometria de um triângulo
+	// Gerando um buffer simples, com a geometria de um triÃ¢ngulo
 	GLuint VAO = setupGeometry();
 	
 	// Enviando a cor desejada (vec4) para o fragment shader
@@ -69,61 +69,53 @@ int main()
 	
 	glUseProgram(shader.ID);
 
-	//Criando a Matrix de projeção usando a GLM
+	//Criando a Matrix de projeÃ§Ã£o usando a GLM
 	glm::mat4 projection = glm::mat4(1);
 	projection = glm::ortho(0.0, 800.0, 0.0, 600.0, -1.0, 1.0);
 	
 	GLint projLoc = glGetUniformLocation(shader.ID, "projection");
 	glUniformMatrix4fv(projLoc, 1, FALSE, glm::value_ptr(projection));
 
-	// Loop da aplicação - "game loop"
+	// Loop da aplicaÃ§Ã£o - "game loop"
 	while (!glfwWindowShouldClose(window))
 	{
-		// Checa se houveram eventos de input (key pressed, mouse moved etc.) e chama as funções de callback correspondentes
+		// Checa se houveram eventos de input (key pressed, mouse moved etc.) e chama as funÃ§Ãµes de callback correspondentes
 		glfwPollEvents();
 
-		// Limpa o buffer de cor
-		glClearColor(0.8f, 0.8f, 0.8f, 1.0f); //cor de fundo
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Obtendo as proporções da viewport
+		// Obtendo as proporÃ§Ãµes da viewport
 		int width, height;
 		glfwGetFramebufferSize(window, &width, &height);
 
-		// Definindo as dimensões da viewport QUADRANTE 1
-		glViewport(0, 0, width/2, height/2);		
-		// Chamada de desenho - drawcall
-		glBindVertexArray(VAO);		
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
-		glDrawArrays(GL_TRIANGLES, 0, 3);						
-		glBindVertexArray(0);
+		// Limpa o buffer de cor
+		glClearColor(0.8f, 0.8f, 0.8f, 1.0f); //cor de fundo
+		glClear(GL_COLOR_BUFFER_BIT);	
 
-		// Definindo as dimensões da viewport QUADRANTE 2
+		//enviando cor para variÃ¡vel uniform inputColor
+		glUniform4f(colorLoc, 1.0f, 0.0f, 1.0f, 1.0f);
+
+		glBindVertexArray(VAO);
+
+		// Definindo as dimensÃµes da viewport QUADRANTE 1
+		glViewport(0, 0, width/2, height/2);		
+		// Chamada de desenho - drawcall	
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		// Definindo as dimensÃµes da viewport QUADRANTE 2
 		glViewport(0, height / 2, width / 2, height / 2);
 		// Chamada de desenho - drawcall
-		glBindVertexArray(VAO);
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 1.0f, 0.0f, 0.0f, 1.0f); //enviando cor para variável uniform inputColor
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glBindVertexArray(0);
-
-		// Definindo as dimensões da viewport QUADRANTE 3
+		
+		// Definindo as dimensÃµes da viewport QUADRANTE 3
 		glViewport(width / 2, 0, width / 2, height / 2);
 		// Chamada de desenho - drawcall
-		glBindVertexArray(VAO);
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 0.0f, 1.0f, 0.0f, 1.0f); //enviando cor para variável uniform inputColor
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glBindVertexArray(0);
-
-		// Definindo as dimensões da viewport QUADRANTE 4
+		
+		// Definindo as dimensÃµes da viewport QUADRANTE 4
 		glViewport(width / 2, height / 2, width / 2, height / 2);
 		// Chamada de desenho - drawcall
-		glBindVertexArray(VAO);
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 1.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+		
+
 		glBindVertexArray(0);
 
 		// Troca os buffers da tela
@@ -131,12 +123,12 @@ int main()
 	}
 	// Pede pra OpenGL desalocar os buffers
 	glDeleteVertexArrays(1, &VAO);
-	// Finaliza a execução da GLFW, limpando os recursos alocados por ela
+	// Finaliza a execuÃ§Ã£o da GLFW, limpando os recursos alocados por ela
 	glfwTerminate();
 	return 0;
 }
 
-// Função de callback de teclado
+// FunÃ§Ã£o de callback de teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
