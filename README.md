@@ -8,3 +8,8 @@
 
 - Solução: Lista1
 - Projetos: Exercicio5, Exercicio6, Exercicio7, Exercicio8, Exercicio9
+
+## Entrega 3 - lista de exercícios 2
+
+- Solução: Lista2
+- Projetos: Exercicio1, Exercicio4, Exercicio5
