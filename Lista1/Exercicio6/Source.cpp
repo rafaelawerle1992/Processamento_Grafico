@@ -1,10 +1,10 @@
 /* Lista 1 - Exercicio 6
 * Rafaela Werle
 * 
-* AtenÁ„o as linhas que ativam cada uma das formas. 
-* Quando remover coment·rios de uma forma, deve-se comentar as linhas que ativam as outras.
+* Aten√ß√£o as linhas que ativam cada uma das formas. 
+* Quando remover coment√°rios de uma forma, deve-se comentar as linhas que ativam as outras.
 * 
-* Circulo completo - ativar as linhas 75 e 117 (j· deixei nesse padr„o)
+* Circulo completo - ativar as linhas 75 e 117 (j√° deixei nesse padr√£o)
 * 
 * a. Octagno - ativar as linhas 79 e 121
 * b. Pentagono - ativar linhas 83 e 121
@@ -12,10 +12,10 @@
 * d. Fatia de Pizza - ativar as linhas 75 e 129
 * e. Estrela - ativar as linhas 87, 88 e 133.
 * 
-* Na funÁ„o GenerateCircle, fiz dois laÁos FOR.
+* Na fun√ß√£o GenerateCircle, fiz dois la√ßos FOR.
 * 
-* LaÁo FOR da linha 167 atÈ 187 - EXCLUSIVO ESTRELA
-* LaÁo FOR da linha 189 atÈ 196 - Demais formas.
+* La√ßo FOR da linha 176 at√© 196 - EXCLUSIVO ESTRELA
+* La√ßo FOR da linha 198 at√© 205 - Demais formas.
  */
 
 #include <iostream>
@@ -35,41 +35,41 @@ using namespace std;
 
 const float pi = 3.1416;
 
-// ProtÛtipo da funÁ„o de callback de teclado
+// Prot√≥tipo da fun√ß√£o de callback de teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-// ProtÛtipos das funÁ„o que gera o cirulo
+// Prot√≥tipos das fun√ß√£o que gera o cirulo
 int generateCircle(float raio, int n);
 
-// Dimensıes da janela (pode ser alterado em tempo de execuÁ„o)
+// Dimens√µes da janela (pode ser alterado em tempo de execu√ß√£o)
 const GLuint WIDTH = 800, HEIGHT = 600;
 
-// FunÁ„o MAIN
+// Fun√ß√£o MAIN
 int main()
 {
-	// InicializaÁ„o da GLFW
+	// Inicializa√ß√£o da GLFW
 	glfwInit();
 
-	// CriaÁ„o da janela GLFW
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Lista1 - ExercÌcio6 - Rafaela Werle", nullptr, nullptr);
+	// Cria√ß√£o da janela GLFW
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Lista1 - Exerc√≠cio6 - Rafaela Werle", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
-	// Fazendo o registro da funÁ„o de callback para a janela GLFW
+	// Fazendo o registro da fun√ß√£o de callback para a janela GLFW
 	glfwSetKeyCallback(window, key_callback);
 
-	// GLAD: carrega todos os ponteiros d funÁıes da OpenGL
+	// GLAD: carrega todos os ponteiros d fun√ß√µes da OpenGL
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 	}
 
-	// Obtendo as informaÁıes de vers„o
+	// Obtendo as informa√ß√µes de vers√£o
 	const GLubyte* renderer = glGetString(GL_RENDERER); /* get renderer string */
 	const GLubyte* version = glGetString(GL_VERSION); /* version as a string */
 	cout << "Renderer: " << renderer << endl;
 	cout << "OpenGL version supported " << version << endl;
 
-	// Definindo as dimensıes da viewport com as mesmas dimensıes da janela da aplicaÁ„o
+	// Definindo as dimens√µes da viewport com as mesmas dimens√µes da janela da aplica√ß√£o
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 	glViewport(0, 0, width, height);
@@ -106,10 +106,10 @@ int main()
 
 	glUseProgram(shader.ID);
 	
-	// Loop da aplicaÁ„o - "game loop"
+	// Loop da aplica√ß√£o - "game loop"
 	while (!glfwWindowShouldClose(window))
 	{
-		// Checa se houveram eventos de input (key pressed, mouse moved etc.) e chama as funÁıes de callback correspondentes
+		// Checa se houveram eventos de input (key pressed, mouse moved etc.) e chama as fun√ß√µes de callback correspondentes
 		glfwPollEvents();
 
 		// Limpa o buffer de cor
@@ -120,7 +120,7 @@ int main()
 
 		// Chamada de desenho - drawcall
 		glBindVertexArray(VAO);
-		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para vari·vel uniform inputColor
+		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para vari√°vel uniform inputColor
 
 		//CIRCULO COMPLETO		
 		glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints+2);
@@ -150,7 +150,7 @@ int main()
 
 	// Pede pra OpenGL desalocar os buffers
 	glDeleteVertexArrays(1, &VAO);
-	// Finaliza a execuÁ„o da GLFW, limpando os recursos alocados por ela
+	// Finaliza a execu√ß√£o da GLFW, limpando os recursos alocados por ela
 	glfwTerminate();
 	return 0;
 }
@@ -173,7 +173,7 @@ int generateCircle(float raio, int nPoints)
 	float angle = 0.0;
 	float slice = 2 * pi / (GLfloat) nPoints;
 	
-	/*     //da linha 168 atÈ a linha 187, feitas exclusivamente para geraÁ„o da ESTRELA
+	/*     //da linha 176 at√© a linha 196, feitas exclusivamente para gera√ß√£o da ESTRELA
 	float raio2 = raio * 2;  
 	bool ponta = false; 
 
