@@ -82,48 +82,40 @@ int main()
 		// Checa se houveram eventos de input (key pressed, mouse moved etc.) e chama as funções de callback correspondentes
 		glfwPollEvents();
 
-		// Limpa o buffer de cor
-		glClearColor(0.8f, 0.8f, 0.8f, 1.0f); //cor de fundo
-		glClear(GL_COLOR_BUFFER_BIT);
-
 		// Obtendo as proporções da viewport
 		int width, height;
 		glfwGetFramebufferSize(window, &width, &height);
 
+		// Limpa o buffer de cor
+		glClearColor(0.8f, 0.8f, 0.8f, 1.0f); //cor de fundo
+		glClear(GL_COLOR_BUFFER_BIT);	
+
+		//enviando cor para variável uniform inputColor
+		glUniform4f(colorLoc, 1.0f, 0.0f, 1.0f, 1.0f);
+
+		glBindVertexArray(VAO);
+
 		// Definindo as dimensões da viewport QUADRANTE 1
 		glViewport(0, 0, width/2, height/2);		
-		// Chamada de desenho - drawcall
-		glBindVertexArray(VAO);		
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
-		glDrawArrays(GL_TRIANGLES, 0, 3);						
-		glBindVertexArray(0);
+		// Chamada de desenho - drawcall	
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		// Definindo as dimensões da viewport QUADRANTE 2
 		glViewport(0, height / 2, width / 2, height / 2);
 		// Chamada de desenho - drawcall
-		glBindVertexArray(VAO);
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 1.0f, 0.0f, 0.0f, 1.0f); //enviando cor para variável uniform inputColor
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glBindVertexArray(0);
-
+		
 		// Definindo as dimensões da viewport QUADRANTE 3
 		glViewport(width / 2, 0, width / 2, height / 2);
 		// Chamada de desenho - drawcall
-		glBindVertexArray(VAO);
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 0.0f, 1.0f, 0.0f, 1.0f); //enviando cor para variável uniform inputColor
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glBindVertexArray(0);
-
+		
 		// Definindo as dimensões da viewport QUADRANTE 4
 		glViewport(width / 2, height / 2, width / 2, height / 2);
 		// Chamada de desenho - drawcall
-		glBindVertexArray(VAO);
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 1.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+		
+
 		glBindVertexArray(0);
 
 		// Troca os buffers da tela
