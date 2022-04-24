@@ -30,4 +30,12 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\ortho.fs">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="..\shaders\ortho.vs">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+  </ItemGroup>
 </Project>
