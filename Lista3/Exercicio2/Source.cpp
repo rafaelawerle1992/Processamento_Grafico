@@ -1,4 +1,4 @@
-/* Lista 3 - Exercício 2
+/* Lista 3 - ExercÃ­cio 2
 * Rafaela Werle
 */
 
@@ -25,41 +25,44 @@ bool up = false;
 bool down = false;
 bool esq = false;
 bool dir = false;
+float positionX = 1.0;
+float positionY = 1.0;
 
 
-// Protótipo da função de callback de teclado
+
+// ProtÃ³tipo da funÃ§Ã£o de callback de teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-// Protótipos das funções
+// ProtÃ³tipos das funÃ§Ãµes
 int setupGeometry();
 int generateStar(float raio, int nPoints);
 int generateCircle(float raio, int nPoints);
 
-// Dimensões da janela (pode ser alterado em tempo de execução)
+// DimensÃµes da janela (pode ser alterado em tempo de execuÃ§Ã£o)
 const GLuint WIDTH = 800, HEIGHT = 600;
 
 
-// Função MAIN
+// FunÃ§Ã£o MAIN
 int main()
 {
-	// Inicialização da GLFW
+	// InicializaÃ§Ã£o da GLFW
 	glfwInit();
 
-	// Criação da janela GLFW
+	// CriaÃ§Ã£o da janela GLFW
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Lista3 - Rafaela Werle", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
-	// Fazendo o registro da função de callback para a janela GLFW
+	// Fazendo o registro da funÃ§Ã£o de callback para a janela GLFW
 	glfwSetKeyCallback(window, key_callback);
 
-	// GLAD: carrega todos os ponteiros d funções da OpenGL
+	// GLAD: carrega todos os ponteiros d funÃ§Ãµes da OpenGL
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 
 	}
 
-	// Obtendo as informações de versão
+	// Obtendo as informaÃ§Ãµes de versÃ£o
 	const GLubyte* renderer = glGetString(GL_RENDERER); /* get renderer string */
 	const GLubyte* version = glGetString(GL_VERSION); /* version as a string */
 	cout << "Renderer: " << renderer << endl;
@@ -68,7 +71,7 @@ int main()
 	// Compilando e buildando o programa de shader
 	Shader shader("../shaders/ortho.vs", "../shaders/ortho.fs");
 
-	// Gerando um buffer simples, com a geometria de um triângulo
+	// Gerando um buffer simples, com a geometria de um triÃ¢ngulo
 	float raio = 0.5;
 	int nPoints = 50;
 	GLuint VAO = generateCircle(raio, nPoints);
@@ -79,21 +82,21 @@ int main()
 
 	glUseProgram(shader.ID);
 
-	//Criando a Matrix de projeção usando a GLM
+	//Criando a Matrix de projeÃ§Ã£o usando a GLM
 	glm::mat4 projection = glm::mat4(1);
 	projection = glm::ortho(0.0, 800.0, 0.0, 600.0, -1.0, 1.0);
-	//Enviando matriz de projeção
+	//Enviando matriz de projeÃ§Ã£o
 	GLint projLoc = glGetUniformLocation(shader.ID, "projection");
 	glUniformMatrix4fv(projLoc, 1, FALSE, glm::value_ptr(projection));
 
 	
-	// Loop da aplicação - "game loop"
+	// Loop da aplicaÃ§Ã£o - "game loop"
 	while (!glfwWindowShouldClose(window))
 	{
-		// Checa se houveram eventos de input (key pressed, mouse moved etc.) e chama as funções de callback correspondentes
+		// Checa se houveram eventos de input (key pressed, mouse moved etc.) e chama as funÃ§Ãµes de callback correspondentes
 		glfwPollEvents();
 
-		// Definindo as dimensões da viewport com as mesmas dimensões da janela da aplicação
+		// Definindo as dimensÃµes da viewport com as mesmas dimensÃµes da janela da aplicaÃ§Ã£o
 		int width, height;
 		glfwGetFramebufferSize(window, &width, &height);
 		glViewport(0, 0, width, height);
@@ -105,42 +108,32 @@ int main()
 		//Criando a Matrix de MODELO usando a GLM
 		glm::mat4 model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(400.0, 300.0, 0));
-		GLint modelLoc = glGetUniformLocation(shader.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
 		
+		//aplicando uma transformaÃ§Ã£o
 		if (up) {
-			//aplicando uma transformação
-			model = glm::translate(model, glm::vec3(0.0, 100.0, 0));
-			//enviando matrix de modelo
-			modelLoc = glGetUniformLocation(shader.ID, "model");
-			glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
+		//CIMA
+			model = glm::translate(model, glm::vec3(positionX, positionY, 0));			
 		}
 		if (down) {
-			//aplicando uma transformação
-			model = glm::translate(model, glm::vec3(0.0, -100.0, 0));
-			//enviando matrix de modelo
-			modelLoc = glGetUniformLocation(shader.ID, "model");
-			glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
+		//BAIXO
+			model = glm::translate(model, glm::vec3(positionX, positionY, 0));
 		}
 		if (esq) {
-			//aplicando uma transformação
-			model = glm::translate(model, glm::vec3(-100.0, 0.0, 0));
-			//enviando matrix de modelo
-			modelLoc = glGetUniformLocation(shader.ID, "model");
-			glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
+		//ESQUERDA
+			model = glm::translate(model, glm::vec3(positionX, positionY, 0));
 		}
 		if (dir) {
-			//aplicando uma transformação
-			model = glm::translate(model, glm::vec3(100.0, 0.0, 0));
-			//enviando matrix de modelo
-			modelLoc = glGetUniformLocation(shader.ID, "model");
-			glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
+		//DIREITA
+			model = glm::translate(model, glm::vec3(positionX, positionY, 0));
 		}
 		
+		//enviando matrix de modelo
+		GLint modelLoc = glGetUniformLocation(shader.ID, "model");
+		glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
+
 		// Chamada de desenho - drawcall
 		glBindVertexArray(VAO);
-		// POLIGONO - GL_TRIANGLES
-		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
+		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variÃ¡vel uniform inputColor
 		glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints + 2);
 		glBindVertexArray(0);
 
@@ -149,12 +142,12 @@ int main()
 	}
 	// Pede pra OpenGL desalocar os buffers
 	glDeleteVertexArrays(1, &VAO);
-	// Finaliza a execução da GLFW, limpando os recursos alocados por ela
+	// Finaliza a execuÃ§Ã£o da GLFW, limpando os recursos alocados por ela
 	glfwTerminate();
 	return 0;
 }
 
-// Função de callback de teclado
+// FunÃ§Ã£o de callback de teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -162,6 +155,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 	if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
 		up = true;
+		positionY += 10.0;
 		down = false;
 		esq = false;
 		dir = false;
@@ -169,6 +163,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
 		up = false;
 		down = true;
+		positionY -= 10.0;
 		esq = false;
 		dir = false;
 	}
@@ -176,6 +171,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		up = false;
 		down = false;
 		esq= true;
+		positionX -= 10.0;
 		dir = false;
 	}
 	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
@@ -183,82 +179,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		down = false;
 		esq = false;
 		dir = true;
+		positionX += 10.0;
 	}
-}
-	
-
-int setupGeometry()
-{
-	GLfloat vertices[] = {
-		100.0, 0.0, 0.0,
-		 700.0, 0.0, 0.0,
-		 400.0, 300.0, 0.0,
-	};
-
-	GLuint VBO, VAO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindVertexArray(0);
-
-	return VAO;
-}
-
-int generateStar(float raio, int nPoints)
-{
-	int totalSize = (nPoints + 2) * 3;
-	GLfloat* vertices = new GLfloat[totalSize];
-
-	vertices[0] = 0.0; //x
-	vertices[1] = 0.0; //y
-	vertices[2] = 0.0; //z
-
-	float angle = 0.0;
-	float slice = 2 * pi / (GLfloat)nPoints;
-	float raio2 = raio * 2;
-	bool ponta = false;
-	angle = pi * 0.3;
-
-	for (int i = 3; i < totalSize; i += 3)
-	{
-		if (ponta) {
-			vertices[i] = raio2 * cos(angle);
-			vertices[i + 1] = raio2 * sin(angle);
-			vertices[i + 2] = 0.0;
-			ponta = false;
-		}
-		else {
-			vertices[i] = raio * cos(angle);
-			vertices[i + 1] = raio * sin(angle);
-			vertices[i + 2] = 0.0;
-			ponta = true;
-		}
-		angle += slice;
-	}
-
-	GLuint VBO, VAO;
-
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, totalSize * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
-
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-
-	return VAO;
 }
 
 int generateCircle(float raio, int nPoints)
