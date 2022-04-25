@@ -109,21 +109,22 @@ int main()
 		glm::mat4 model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(400.0, 300.0, 0));
 		
-		//aplicando uma transformação
+		
 		if (up) {
-		//CIMA
-			model = glm::translate(model, glm::vec3(positionX, positionY, 0));			
+			//aplicando uma transformação
+			model = glm::translate(model, glm::vec3(positionX, positionY, 0));
+			
 		}
 		if (down) {
-		//BAIXO
+			//aplicando uma transformação
 			model = glm::translate(model, glm::vec3(positionX, positionY, 0));
 		}
 		if (esq) {
-		//ESQUERDA
+			//aplicando uma transformação
 			model = glm::translate(model, glm::vec3(positionX, positionY, 0));
 		}
 		if (dir) {
-		//DIREITA
+			//aplicando uma transformação
 			model = glm::translate(model, glm::vec3(positionX, positionY, 0));
 		}
 		
@@ -133,6 +134,7 @@ int main()
 
 		// Chamada de desenho - drawcall
 		glBindVertexArray(VAO);
+		// POLIGONO - GL_TRIANGLES
 		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
 		glDrawArrays(GL_TRIANGLE_FAN, 0, nPoints + 2);
 		glBindVertexArray(0);
