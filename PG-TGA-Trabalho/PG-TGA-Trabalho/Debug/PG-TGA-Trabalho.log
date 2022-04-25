@@ -1,0 +1,9 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: O diretório intermediário (Debug\) contém arquivos compartilhados de outro projeto (Framework-PG.vcxproj). Isso pode levar a um comportamento incorreto de limpeza e recompilação.
+  Cenario.cpp
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(118,32): warning C4305: '-=': truncamento de 'double' para 'float'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(122,32): warning C4305: '-=': truncamento de 'double' para 'float'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(126,32): warning C4305: '-=': truncamento de 'double' para 'float'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(130,32): warning C4305: '-=': truncamento de 'double' para 'float'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(134,32): warning C4305: '-=': truncamento de 'double' para 'float'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(153,20): warning C4018: '<': incompatibilidade de signed/unsigned
+  PG-TGA-Trabalho.vcxproj -> D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\Debug\PG-TGA-Trabalho.exe
