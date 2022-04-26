@@ -1,15 +1,15 @@
 #include "Cenario.h"
 
 
-//defini��o de vari�veis
+//definição de variáveis
 static bool keys[1024];
 static bool resized;
 static GLuint width, height;
 
-// vari�veis de controle
+// variáveis de controle
 bool direita = false, esquerda = false, colide = false, movedir = false, moveesq = false;
 
-// inicializa��o das coordenadas dos personagem e dos inimigos.
+// inicialização das coordenadas dos personagem e dos inimigos.
 float xhp = 400, yhp = 150;
 float xp1 = 100, yp1 = 700;
 float xp2 = 200, yp2 = 600;
@@ -20,7 +20,7 @@ float xp6 = 600, yp6 = 800;
 float xp7 = 700, yp7 = 700;
 float xp = 100, yp = 700;
 
-//vari�veis auxiliares de movimenta��o
+//variáveis auxiliares de movimentação
 float moveY = 1;
 float moveback = 0;
 
@@ -33,6 +33,7 @@ Cenario::~Cenario()
 {
 }
 
+//INICIALIZAÇÃO DA APLICAÇÃO (CÓDIGO PADRÃO)
 void Cenario::initialize(GLuint w, GLuint h)
 {
 	width = w;
@@ -40,22 +41,23 @@ void Cenario::initialize(GLuint w, GLuint h)
 	initializeGraphics();
 }
 
+//INICIALIÇÃO DA APLICAÇAO GRAFICA E CHAMADA DOS METODOS INICIAIS (CÓDIGO PADRÃO)
 void Cenario::initializeGraphics()
 {
 	// Inicia GLFW
 	glfwInit();
 
-	// Cria��o da janela GLFW
+	// Criação da janela GLFW
 	window = glfwCreateWindow(width, height, "GameHP_PG_GA", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
-	// Fazendo o registro da fun��o de callback para a janela GLFW
+	// Fazendo o registro da função de callback para a janela GLFW
 	glfwSetKeyCallback(window, key_callback);
 
 	//Setando a callback de redimensionamento da janela
 	glfwSetWindowSizeCallback(window, resize);
 	
-	// GLAD: carrega todos os ponteiros d fun��es da OpenGL
+	// GLAD: carrega todos os ponteiros d funções da OpenGL
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
@@ -71,11 +73,13 @@ void Cenario::initializeGraphics()
 	resized = true; 
 }
 
+//CRIAÇÃO DO SHADER (CÓDIGO PADRÃO)
 void Cenario::addShader(string vFilename, string fFilename)
 {
 	shader = new Shader (vFilename.c_str(), fFilename.c_str());
 }
 
+//FUNÇÕES DE TECLADO - MODIFICADO PARA CAPTURA DAS TECLAS RIGHT E LEFT
 void Cenario::key_callback(GLFWwindow * window, int key, int scancode, int action, int mode)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -103,31 +107,36 @@ void Cenario::key_callback(GLFWwindow * window, int key, int scancode, int actio
 	}
 }
 
+//CONFIGURAÇÃO DE VIEWPORT (CÓDIGO PADRÃO)
 void Cenario::resize(GLFWwindow * window, int w, int h)
 {
 	width = w;
 	height = h;
 	resized = true;
 
-	// Defini��o da ViewPort
+	// Definição da ViewPort
 	glViewport(0, 0, width, height);
 }
 
+//MÉTODO PARA IDENTIFICAR QUANDO HOUVER A COLISÃO ENTRE O PERSONAGEM E OS INIMIGOS
+//PERSONAGEM - xh, yh
+//INIMIGOS - xp, yp
 void Cenario::colisao(float xp, float yp, float xh, float yh)
 {
-	if (xh == xp && yp <= yh + 40 && yp > yh - 40)
+	if (xh == xp && yp <= yh + 50 && yp > yh - 50)
 		colide = true;
 }
 
+//METODO QUE REALIZA O GERENCIAMENTO DAS TRANSFORMAÇÕES
 void Cenario::update()
 {
 	if (keys[GLFW_KEY_ESCAPE])
 		glfwSetWindowShouldClose(window, GL_TRUE);
 
-	//Transforma��o PERSONAGEM com uso das setas direita e esquerda
+	//Transformação PERSONAGEM movimentação com uso das setas direita e esquerda
 	if (direita) {
 		objects[5]->setPosition(glm::vec3(xhp, yhp, 0));
-		unsigned int texID = loadTexture("../textures/hpdir.png");
+		unsigned int texID = loadTexture("../textures/hpdir.png");  //altera a textura conforme o personagem se movimenta
 		objects[5]->setTexture(texID);
 		direita = false;
 	}
@@ -138,43 +147,43 @@ void Cenario::update()
 		esquerda = false;
 	}		
 
-	//Transforma��o OBJETO 1
+	//Transformação OBJETO 1
 	if (yp1 >= -20) yp1 -= moveY;
 	else yp1 = 600;
 	objects[6]->setPosition(glm::vec3(xp1, yp1, 0));
 	colisao(xp1, yp1, xhp, yhp);	
 
-	//Transforma��o OBJETO 2
+	//Transformação OBJETO 2
 	if (yp2 >= -20) yp2 -= moveY;
 	else yp2 = 600;
 	objects[7]->setPosition(glm::vec3(xp2, yp2, 0));
 	colisao(xp2, yp2, xhp, yhp);
 
-	//Transforma��o OBJETO 3
+	//Transformação OBJETO 3
 	if (yp3 >= -20) yp3 -= moveY;
 	else yp3 = 600;
 	objects[8]->setPosition(glm::vec3(xp3, yp3, 0));
 	colisao(xp3, yp3, xhp, yhp);
 
-	//Transforma��o OBJETO 4
+	//Transformação OBJETO 4
 	if (yp4 >= -20) yp4 -= moveY;
 	else yp4 = 600;
 	objects[9]->setPosition(glm::vec3(xp4, yp4, 0));
 	colisao(xp4, yp4, xhp, yhp);
 
-	//Transforma��o OBJETO 5
+	//Transformação OBJETO 5
 	if (yp5 >= -20) yp5 -= moveY;
 	else yp5 = 600;
 	objects[10]->setPosition(glm::vec3(xp5, yp5, 0));	
 	colisao(xp5, yp5, xhp, yhp);
 
-	//Transforma��o OBJETO 6
+	//Transformação OBJETO 6
 	if (yp6 >= -20) yp6 -= moveY;
 	else yp6 = 600;
 	objects[11]->setPosition(glm::vec3(xp6, yp6, 0));
 	colisao(xp6, yp6, xhp, yhp);
 
-	//Transforma��o OBJETO 7
+	//Transformação OBJETO 7
 	if (yp7 >= -20) yp7 -= moveY;
 	else yp7 = 600;
 	objects[12]->setPosition(glm::vec3(xp7, yp7, 0));
@@ -182,6 +191,7 @@ void Cenario::update()
 	
 }
 
+//ATUALIZAR E DESENHAR OBJETOS (CÓDIGO PADRÃO)
 void Cenario::render()
 {
 	// Limpa o buffer de cor
@@ -203,6 +213,7 @@ void Cenario::render()
 
 }
 
+//START DO GAME - MODIFIQUEI APENAS PARA IENTIFICAR E ENCERRAR QUANDO HOUVER COLISÃO.
 void Cenario::run()
 {
 	//GAME LOOP
@@ -226,16 +237,19 @@ void Cenario::run()
 	}
 }
 
+//FINALIZAÇÃO (CÓDIGO PADRÃO)
 void Cenario::finish()
 {
-	// Finaliza a execu��o da GLFW, limpando os recursos alocados por ela.
+	// Finaliza a execução da GLFW, limpando os recursos alocados por ela.
 	glfwTerminate();
 }
 
+//CONFIGURA O BACKGROUND DO CENÁRIO. 
+//Usei 5 cenarios de fundo, porém não consegui aplicar movimento neles.
 void Cenario::setupBackground()
 {
 	Sprite* obj;
-	//CRIA��O DO BACKGROUND (objetos indices de [0] a [4])
+	//CRIAÇÃO DO BACKGROUND (objetos indices de [0] a [4])
 	for (int i = 0; i < 5; i++) {
 		obj = new Sprite;
 		obj->setPosition(glm::vec3(width / 2, height / 2, 0.0));
@@ -262,13 +276,14 @@ void Cenario::setupBackground()
 	objects[4]->setTexture(texID);
 }
 
+//CRIAÇÃO DO PERSONAGEM E DOS INIMIGOS, POSIÇÃO INICIAL E TEXTURAS
 void Cenario::setupScene()
 {
 	setupBackground();
 
 	Sprite* obj;
 
-	//CRIA��O DO PERSONAGEM (indice do objeto [5])
+	//CRIAÇÃO DO PERSONAGEM (indice do objeto [5])
 	obj = new Sprite;
 	obj->setPosition(glm::vec3(xhp, yhp, 0.0));
 	obj->setDimension(glm::vec3(70, 100, 1.0f));
@@ -276,7 +291,7 @@ void Cenario::setupScene()
 	obj->setShader(shader);
 	objects.push_back(obj);
 
-	//CRIA��O DOS BALA�OS (indice dos objetos de [6] at� [12])
+	//CRIAÇÃO DOS BALAÇOS (indice dos objetos de [6] até [12])
 	for (int i = 0; i < 7; i++) {
 		obj = new Sprite;
 		obj->setPosition(glm::vec3(100.0f, 600, 0.0));
@@ -304,13 +319,14 @@ void Cenario::setupScene()
 	ortho2D[2] = 0.0f; 
 	ortho2D[3] = 600.0f; 
 
-	//Habilita transpar�ncia
+	//Habilita transparência
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
 }
 
+//CAMERA 2D (CÓDIGO PADRÃO)
 void Cenario::setupCamera2D() //TO DO: parametrizar aqui
 {
 	projection = glm::ortho(ortho2D[0], ortho2D[1], ortho2D[2], ortho2D[3], -1.0f,1.0f);
@@ -318,6 +334,7 @@ void Cenario::setupCamera2D() //TO DO: parametrizar aqui
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
+//CARREGAMENTO DAS TEXTURAS (CÓDIGO PADRÃO)
 unsigned int Cenario::loadTexture(string filename)
 {
 	unsigned int texture;
