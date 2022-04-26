@@ -18,38 +18,38 @@ public:
 	Cenario();
 	~Cenario();
 	
-	//GLFW callbacks - PRECISAM SER EST¡TICAS
-	//Para isso, as vari·veis que modificamos dentro deles
-	//tambÈm precisam ser e est„o no inÌcio do SceneManager.cpp
+	//GLFW callbacks - PRECISAM SER EST√ÅTICAS
+	//Para isso, as vari√°veis que modificamos dentro deles
+	//tamb√©m precisam ser e est√£o no in√≠cio do SceneManager.cpp
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 	static void resize(GLFWwindow* window, int width, int height);
 
-	//MÈtodos pricipais
+	//M√©todos pricipais
 	void initialize(GLuint width, GLuint height);
 	void run();
 	void finish();
 
-	//MÈtodos chamados no run (ciclo)
+	//M√©todos chamados no run (ciclo)
 	void update();
 	void render();
 
-	//MÈtodos para configuraÁ„o e carregamento dos elementos da cena
+	//M√©todos para configura√ß√£o e carregamento dos elementos da cena
 	void initializeGraphics();
 	void addShader(string vFilename, string fFilename);
 	void setupScene(); //antigo setupGeometry
-	void setupBackground();
+	void colisao(float px, float py, float hx, float hy);
 	void setupCamera2D();
 	unsigned int loadTexture(string filename); 
 
 private:
 	
-	//Janela GLFW (por enquanto, assumimos apenas 1 inst‚ncia)
+	//Janela GLFW (por enquanto, assumimos apenas 1 inst√¢ncia)
 	GLFWwindow *window;
 
-	//Programa de shader (por enquanto, assumimos apenas 1 inst‚ncia)
+	//Programa de shader (por enquanto, assumimos apenas 1 inst√¢ncia)
 	Shader *shader;
 
-	//C‚mera 2D - Matriz de projeÁ„o (ortogr·fica) com os limites em x,y
+	//C√¢mera 2D - Matriz de proje√ß√£o (ortogr√°fica) com os limites em x,y
 	glm::vec4 ortho2D; //xmin, xmax, ymin, ymax
 	glm::mat4 projection;
 
