@@ -1,18 +1,28 @@
 #include "Cenario.h"
 
-//definiÁ„o de vari·veis
+//defini√ß√£o de vari√°veis
 static bool keys[1024];
 static bool resized;
 static GLuint width, height;
 bool direita = false;
 bool esquerda = false;
+bool colide = false;
 float xhp = 400;
 float yhp = 150;
-float move1 = 600;
-float move2 = 700;
-float move3 = 750;
-float move4 = 900;
-float move5 = 800;
+float xp1 = 100;
+float yp1 = 700;
+float xp2 = 200;
+float yp2 = 700;
+float xp3 = 300;
+float yp3 = 700;
+float xp4 = 400;
+float yp4 = 700;
+float xp5 = 500;
+float yp5 = 700;
+float xp6 = 600;
+float yp6 = 700;
+float xp7 = 700;
+float yp7 = 700;
 
 
 Cenario::Cenario()
@@ -35,17 +45,17 @@ void Cenario::initializeGraphics()
 	// Inicia GLFW
 	glfwInit();
 
-	// CriaÁ„o da janela GLFW
+	// Cria√ß√£o da janela GLFW
 	window = glfwCreateWindow(width, height, "Game_Pomo_de _Ouro", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
-	// Fazendo o registro da funÁ„o de callback para a janela GLFW
+	// Fazendo o registro da fun√ß√£o de callback para a janela GLFW
 	glfwSetKeyCallback(window, key_callback);
 
 	//Setando a callback de redimensionamento da janela
 	glfwSetWindowSizeCallback(window, resize);
 	
-	// GLAD: carrega todos os ponteiros d funÁıes da OpenGL
+	// GLAD: carrega todos os ponteiros d fun√ß√µes da OpenGL
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
@@ -95,8 +105,14 @@ void Cenario::resize(GLFWwindow * window, int w, int h)
 	height = h;
 	resized = true;
 
-	// DefiniÁ„o da ViewPort
+	// Defini√ß√£o da ViewPort
 	glViewport(0, 0, width, height);
+}
+
+void Cenario::colisao(float xp, float yp, float xh, float yh)
+{
+	if (xh == xp && yp <= yh + 40 && yp > yh - 40)
+		colide = true;
 }
 
 void Cenario::update()
@@ -104,7 +120,7 @@ void Cenario::update()
 	if (keys[GLFW_KEY_ESCAPE])
 		glfwSetWindowShouldClose(window, GL_TRUE);
 
-	//TransformaÁ„o PERSONAGEM com uso das setas direita e esquerda
+	//Transforma√ß√£o PERSONAGEM com uso das setas direita e esquerda
 	if (direita) {
 		objects[10]->setPosition(glm::vec3(xhp, yhp, 0));
 		direita = false;
@@ -114,27 +130,40 @@ void Cenario::update()
 		esquerda = false;
 	}
 
-	//TransformaÁ„o OBJETO 1
-	if (move1 >= -20) move1 -= 0.2;
-	objects[5]->setPosition(glm::vec3(100, move1, 0));
+	//Transforma√ß√£o OBJETO 1
+	if (yp1 >= -20) yp1 -= 0.2;
+	objects[5]->setPosition(glm::vec3(xp1, yp1, 0));
+	colisao(xp1, yp1, xhp, yhp);	
 
-	//TransformaÁ„o OBJETO 2
-	if (move2 >= -20) move2 -= 0.2;
-	objects[6]->setPosition(glm::vec3(200, move2, 0));
+	//Transforma√ß√£o OBJETO 2
+	if (yp2 >= -20) yp2 -= 0.4;
+	objects[6]->setPosition(glm::vec3(xp2, yp2, 0));
+	colisao(xp2, yp2, xhp, yhp);
 
-	//TransformaÁ„o OBJETO 3
-	if (move3 >= -20) move3 -= 0.3;
-	objects[7]->setPosition(glm::vec3(400, move3, 0));
+	//Transforma√ß√£o OBJETO 3
+	if (yp3 >= -20) yp3 -= 0.5;
+	objects[7]->setPosition(glm::vec3(xp3, yp3, 0));
+	colisao(xp3, yp3, xhp, yhp);
 
-	//TransformaÁ„o OBJETO 4
-	if (move4 >= -20) move4 -= 0.3;
-	objects[8]->setPosition(glm::vec3(550, move4, 0));
+	//Transforma√ß√£o OBJETO 4
+	if (yp4 >= -20) yp4 -= 0.3;
+	objects[8]->setPosition(glm::vec3(xp4, yp4, 0));
+	colisao(xp4, yp4, xhp, yhp);
 
-	//TransformaÁ„o OBJETO 5
-	if (move5 >= -20) move5 -= 0.2;
-	objects[9]->setPosition(glm::vec3(700, move5, 0));
-	//objects[1]->setAngle((float)glfwGetTime());
+	//Transforma√ß√£o OBJETO 5
+	if (yp5 >= -20) yp5 -= 0.4;
+	objects[9]->setPosition(glm::vec3(xp5, yp5, 0));	
+	colisao(xp5, yp5, xhp, yhp);
 
+	//Transforma√ß√£o OBJETO 6
+	if (yp6 >= -20) yp6 -= 0.3;
+	objects[10]->setPosition(glm::vec3(xp6, yp6, 0));
+	colisao(xp6, yp6, xhp, yhp);
+
+	//Transforma√ß√£o OBJETO 7
+	if (yp7 >= -20) yp7 -= 0.4;
+	objects[11]->setPosition(glm::vec3(xp7, yp7, 0));
+	colisao(xp7, yp7, xhp, yhp);
 }
 
 void Cenario::render()
@@ -162,6 +191,11 @@ void Cenario::run()
 	//GAME LOOP
 	while (!glfwWindowShouldClose(window))
 	{
+		//Encerra Execu√ß√£o se houver colis√£o
+		if (colide) {
+			finish();
+		}
+		
 		// Checa se houveram eventos de input
 		glfwPollEvents();
 
@@ -178,7 +212,7 @@ void Cenario::run()
 
 void Cenario::finish()
 {
-	// Finaliza a execuÁ„o da GLFW, limpando os recursos alocados por ela.
+	// Finaliza a execu√ß√£o da GLFW, limpando os recursos alocados por ela.
 	glfwTerminate();
 }
 
@@ -186,7 +220,7 @@ void Cenario::finish()
 void Cenario::setupScene()
 {
 	Sprite* obj;
-	//CRIA«√O DO BACKGROUND (5 CAMADAS)
+	//CRIA√á√ÉO DO BACKGROUND
 	for (int i = 0; i < 5; i++) {
 		obj = new Sprite;
 		obj->setPosition(glm::vec3(width / 2, height / 2, 0.0));
@@ -195,9 +229,8 @@ void Cenario::setupScene()
 		obj->setShader(shader);
 		objects.push_back(obj);
 	}
-
-	//CRIA«√O DOS POMOS
-	for (int i = 0; i < 5; i++) {
+	//CRIA√á√ÉO DOS POMOS
+	for (int i = 0; i < 7; i++) {
 		obj = new Sprite;
 		obj->setPosition(glm::vec3(100.0f, 600, 0.0));
 		obj->setDimension(glm::vec3(40.0f, 40.0f, 1.0f));
@@ -205,49 +238,43 @@ void Cenario::setupScene()
 		obj->setShader(shader);
 		objects.push_back(obj);
 	}
-
-	//CRIA«√O DO PERSONAGEM
+	//CRIA√á√ÉO DO PERSONAGEM
 	obj = new Sprite;
 	obj->setPosition(glm::vec3(xhp, yhp, 0.0));
-	obj->setDimension(glm::vec3(70, 90, 1.0f));
+	obj->setDimension(glm::vec3(70, 80, 1.0f));
 	obj->setAngle(glm::radians(180.0f));
 	obj->setShader(shader);
 	objects.push_back(obj);
 
-	
+	//Carregando TEXTURAS
 	unsigned int texID = loadTexture("../textures/camada7.png");
 	objects[0]->setTexture(texID);
-
 	texID = loadTexture("../textures/camada4.png");
 	objects[1]->setTexture(texID);
-
 	texID = loadTexture("../textures/camada3.png");
 	objects[2]->setTexture(texID);
-
 	texID = loadTexture("../textures/camada2.png");
 	objects[3]->setTexture(texID);
-
 	texID = loadTexture("../textures/camada1.png");
 	objects[4]->setTexture(texID);
-
-
-	texID = loadTexture("../textures/pomo.png");
+	texID = loadTexture("../textures/balaco.png");
 	objects[5]->setTexture(texID);
 	objects[6]->setTexture(texID);
 	objects[7]->setTexture(texID);
 	objects[8]->setTexture(texID);
 	objects[9]->setTexture(texID);
-
-	texID = loadTexture("../textures/hp1.png");
 	objects[10]->setTexture(texID);
+	objects[11]->setTexture(texID);
+	texID = loadTexture("../textures/hp1.png");
+	objects[12]->setTexture(texID);
 
-	//Definindo a janela do mundo (ortho2D)
-	ortho2D[0] = 0.0f; //xMin
-	ortho2D[1] = 800.0f; //xMax
-	ortho2D[2] = 0.0f; //yMin
-	ortho2D[3] = 600.0f; //yMax
+	//Definindo tamanho da janela
+	ortho2D[0] = 0.0f; 
+	ortho2D[1] = 800.0f; 
+	ortho2D[2] = 0.0f; 
+	ortho2D[3] = 600.0f; 
 
-	//Habilita transparÍncia
+	//Habilita transpar√™ncia
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -256,14 +283,14 @@ void Cenario::setupScene()
 
 void Cenario::setupCamera2D() //TO DO: parametrizar aqui
 {
-	float zNear = -1.0, zFar = 1.0; //est„o fixos porque n„o precisamos mudar
+	float zNear = -1.0, zFar = 1.0; //est√£o fixos porque n√£o precisamos mudar
 
 	projection = glm::ortho(ortho2D[0], ortho2D[1], ortho2D[2], ortho2D[3], zNear, zFar);
 
 
-	//Obtendo o identificador da matriz de projeÁ„o para enviar para o shader
+	//Obtendo o identificador da matriz de proje√ß√£o para enviar para o shader
 	GLint projLoc = glGetUniformLocation(shader->ID, "projection");
-	//Enviando a matriz de projeÁ„o para o shader
+	//Enviando a matriz de proje√ß√£o para o shader
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
