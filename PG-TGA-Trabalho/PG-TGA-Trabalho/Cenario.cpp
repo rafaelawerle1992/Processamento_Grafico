@@ -131,37 +131,44 @@ void Cenario::update()
 	}
 
 	//Transformação OBJETO 1
-	if (yp1 >= -20) yp1 -= 0.2;
+	if (yp1 >= -20) yp1 -= 0.3;
+	else yp1 = 600;
 	objects[5]->setPosition(glm::vec3(xp1, yp1, 0));
 	colisao(xp1, yp1, xhp, yhp);	
 
 	//Transformação OBJETO 2
 	if (yp2 >= -20) yp2 -= 0.4;
+	else yp2 = 600;
 	objects[6]->setPosition(glm::vec3(xp2, yp2, 0));
 	colisao(xp2, yp2, xhp, yhp);
 
 	//Transformação OBJETO 3
 	if (yp3 >= -20) yp3 -= 0.5;
+	else yp3 = 600;
 	objects[7]->setPosition(glm::vec3(xp3, yp3, 0));
 	colisao(xp3, yp3, xhp, yhp);
 
 	//Transformação OBJETO 4
 	if (yp4 >= -20) yp4 -= 0.3;
+	else yp4 = 600;
 	objects[8]->setPosition(glm::vec3(xp4, yp4, 0));
 	colisao(xp4, yp4, xhp, yhp);
 
 	//Transformação OBJETO 5
 	if (yp5 >= -20) yp5 -= 0.4;
+	else yp5 = 600;
 	objects[9]->setPosition(glm::vec3(xp5, yp5, 0));	
 	colisao(xp5, yp5, xhp, yhp);
 
 	//Transformação OBJETO 6
-	if (yp6 >= -20) yp6 -= 0.3;
+	if (yp6 >= -20) yp6 -= 0.35;
+	else yp6 = 600;
 	objects[10]->setPosition(glm::vec3(xp6, yp6, 0));
 	colisao(xp6, yp6, xhp, yhp);
 
 	//Transformação OBJETO 7
-	if (yp7 >= -20) yp7 -= 0.4;
+	if (yp7 >= -20) yp7 -= 0.45;
+	else yp7 = 600;
 	objects[11]->setPosition(glm::vec3(xp7, yp7, 0));
 	colisao(xp7, yp7, xhp, yhp);
 }
