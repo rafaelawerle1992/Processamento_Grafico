@@ -1,0 +1,5 @@
+﻿  Cenario.cpp
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(129,19): warning C4305: '-=': truncamento de 'double' para 'float'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(133,19): warning C4305: '+=': truncamento de 'double' para 'float'
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\PG-TGA-Trabalho\Cenario.cpp(209,20): warning C4018: '<': incompatibilidade de signed/unsigned
+  PG-TGA-Trabalho.vcxproj -> D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGA-Trabalho\Debug\PG-TGA-Trabalho.exe
