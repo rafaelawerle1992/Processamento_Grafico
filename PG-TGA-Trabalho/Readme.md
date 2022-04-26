@@ -3,7 +3,7 @@
 ENTREGA DO TRABALHO DO GRAU A
 
 - Realizei a criação das Sprites, configuração das texturas, algumas tranformações, movimento do personagem e finalização da aplicação em caso de colisão.
-- Nao consegui realizar o efeito parallax com as camas de background e nem a animação do personagem.
+- Nao consegui realizar o efeito parallax com as camadas de background e nem a animação do personagem.
 
 
 ## Tela do Jogo
