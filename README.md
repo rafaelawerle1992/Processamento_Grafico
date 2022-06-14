@@ -27,5 +27,7 @@ Unisinos - Turma 23 - 2022_01
 ![image](https://user-images.githubusercontent.com/58199187/173502706-3a831941-1364-4162-97a2-a7bc25d9a1d5.png)
 
 ## Entrega 6 - [Aplicação de filtros com OpenCV]()
+- Solução: HelloOpenCV
+- Projeto: HelloOpenVC. Lista de filtros feito durante a Aula.
 
 ## Entrega 7 - [Trabalho do Grau B](https://github.com/rafawerle/Processamento_Grafico/tree/master/PG-TGB-Trabalho)
