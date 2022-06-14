@@ -24,6 +24,7 @@ Unisinos - Turma 23 - 2022_01
 - Projetos: Exercicio1, Exercicio2, ExercicioExtra
 
 ## Entrega 5 - [Trabalho do Grau A](https://github.com/rafawerle/Processamento_Grafico/tree/master/PG-TGA-Trabalho)
+![image](https://user-images.githubusercontent.com/58199187/173502706-3a831941-1364-4162-97a2-a7bc25d9a1d5.png)
 
 ## Entrega 6 - [Aplicação de filtros com OpenCV]()
 
