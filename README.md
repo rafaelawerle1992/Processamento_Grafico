@@ -31,3 +31,4 @@ Unisinos - Turma 23 - 2022_01
 - Projeto: HelloOpenVC. Lista de filtros feito durante a Aula.
 
 ## Entrega 7 - [Trabalho do Grau B](https://github.com/rafawerle/Processamento_Grafico/tree/master/PG-TGB-Trabalho)
+![image](https://user-images.githubusercontent.com/58199187/174451223-d40f9b3d-8a86-4b97-adfa-d5b6bd04bec7.png)
