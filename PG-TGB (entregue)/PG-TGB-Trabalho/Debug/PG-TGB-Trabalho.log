@@ -1,0 +1,317 @@
+﻿  Origem.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(56,93): warning C4244: '=': conversão de 'double' para 'uchar', possível perda de dados
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(65,17): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(70,29): warning C4244: '=': conversão de 'float' para 'uchar', possível perda de dados
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(75,28): warning C4244: '=': conversão de 'float' para 'uchar', possível perda de dados
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(252,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(252,47): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(254,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(254,47): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(256,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(256,47): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(262,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(262,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(267,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(267,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(272,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(272,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(277,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(277,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(282,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(282,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(287,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(287,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(292,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(292,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(297,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(297,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(302,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(302,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(307,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(307,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(315,50): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(315,44): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(316,50): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(316,44): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(317,50): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(317,44): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(318,50): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(318,44): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(319,50): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(319,44): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(343,65): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(343,58): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(396,77): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(396,64): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(397,85): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(397,72): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(403,78): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(403,64): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(404,86): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(404,72): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(410,77): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(410,64): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(411,85): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(411,72): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(417,78): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(417,64): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(418,86): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(418,72): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(424,77): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(424,64): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(425,85): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(425,72): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(516,61): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(516,54): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(563,60): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\PG-TGB-Trabalho\Origem.cpp(563,53): warning C4244: 'argumento': conversão de 'double' para '_Tp', possível perda de dados
+          with
+          [
+              _Tp=int
+          ]
+  PG-TGB-Trabalho.vcxproj -> D:\Backup\Documents\Acadêmico\unisinos\4 semestre\2022_01 processamento gráfico\Projetos\Trabalhos\PG-TGB (entregue)\Debug\PG-TGB-Trabalho.exe
