@@ -49,6 +49,11 @@ Mapeei todas as posições que eu queria que ficassem os elementos sobre a image
 
 ![image](https://user-images.githubusercontent.com/58199187/174451075-4f59296a-3b73-41dc-abce-91750645f692.png)
 
+Dependendo do filtro que for selecionado, aplico ele após caturar cada frame da camera.
+
+![image](https://user-images.githubusercontent.com/58199187/174452637-6f9b82c2-be1c-44a5-ac63-bb6f8865cbfe.png)
+
+
 - Função para salvar a imagem como jpg.
 
 ![image](https://user-images.githubusercontent.com/58199187/174451107-207044c3-a72a-4ce8-b760-151906250baa.png)
