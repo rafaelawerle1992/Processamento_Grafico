@@ -30,5 +30,6 @@ Unisinos - Turma 23 - 2022_01
 - Solução: HelloOpenCV
 - Projeto: HelloOpenVC. Lista de filtros feito durante a Aula.
 
-## Entrega 7 - [Trabalho do Grau B](https://github.com/rafawerle/Processamento_Grafico/tree/master/PG-TGB-Trabalho)
-![image](https://user-images.githubusercontent.com/58199187/174451223-d40f9b3d-8a86-4b97-adfa-d5b6bd04bec7.png)
+## Entrega 7 - [Trabalho do Grau B](https://github.com/rafawerle/Processamento_Grafico/tree/master/PG-TGB%20(entregue))
+![image](https://user-images.githubusercontent.com/58199187/174455118-d346e8c8-bc7b-42b8-989f-66a807bd5328.png)
+
