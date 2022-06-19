@@ -8,6 +8,7 @@ Processamento de imagens utilizando OpenCV
 - Criei 5 opções de Sticker, com tamanho pré-definido. É necesário selecionar o Sticker e depois clicar na foto para aplicar.
 - Criei 3 botões de menu: Salvar, Reverter, Alternar Foto/Camera.
 
+![image](https://user-images.githubusercontent.com/58199187/174468354-9a246486-6123-4ae6-8aa9-532d9bece94a.png)
 
 
 
