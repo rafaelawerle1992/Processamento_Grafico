@@ -5,7 +5,9 @@
 *
 */ 
 
-//IMPORTA«√O DAS BIBLIOTECAS
+//IMPORTA√á√ÉO DAS BIBLIOTECAS
+#include "opencv2/core/utility.hpp"
+#include "opencv2/video.hpp"
 #include "opencv2/objdetect.hpp"
 #include "opencv2/core.hpp"
 #include "opencv2/imgproc.hpp"
@@ -16,7 +18,7 @@
 #include <filesystem>
 
 //-------------------------------------------------------------------------------
-//DECLARA«AO DE VARI¡VEIS
+//DECLARA√áAO DE VARI√ÅVEIS
 using namespace cv;
 using namespace std;
 
@@ -30,15 +32,16 @@ Mat imgSt1, imgSt2, imgSt3, imgSt4, imgSt5, imgSticker;
 
 enum stickers { NENHUM, OLHOS, GOTAS, FOGOS, FLOWER, COOL };
 int sticker = NENHUM;
+enum filtros {  F0, F1, F2, F3, F4, F5, F6, 
+                F7, F8, F9, F10, F11, F12,
+                F13, F14, F15, F16, F17, F18}; //18 FILTROS POSS√çVEIS.
+int filtro = F0;
 
-bool ligaCamera = false;
+bool cam = false;
+
+
 //-------------------------------------------------------------------------------
-
-
-
-
-//-------------------------------------------------------------------------------
-//FUN«√O OVERLAYIMAGE
+//FUN√á√ÉO OVERLAYIMAGE
 void overlayImage(Mat* src, Mat* overlay, const Point& location)
 {
     for (int y = max(location.y, 0); y < src->rows; ++y)
@@ -62,7 +65,7 @@ void overlayImage(Mat* src, Mat* overlay, const Point& location)
         }
     }
 }
-//FUN«√O INTERPOLATION
+//FUN√á√ÉO INTERPOLATION
 void interpolation(uchar* lut, float* curve, float* originalValue) {
     for (int i = 0; i < 256; i++) {
         int j = 0;
@@ -79,9 +82,89 @@ void interpolation(uchar* lut, float* curve, float* originalValue) {
         lut[i] = slope * a + constant;
     }
 }
+//FUN√á√ÉO DETECTAR FACE 
+void detectAndDraw(Mat& img, CascadeClassifier& cascade,CascadeClassifier& nestedCascade, double scale, bool tryflip)
+{
+    vector<Rect> faces, faces2;
+    const static Scalar colors[] =
+    {
+        Scalar(255,0,0),
+        Scalar(255,128,0),
+        Scalar(255,255,0),
+        Scalar(0,255,0),
+        Scalar(0,128,255),
+        Scalar(0,255,255),
+        Scalar(0,0,255),
+        Scalar(255,0,255)
+    };
+    Mat gray, smallImg;
+
+    cvtColor(img, gray, COLOR_BGR2GRAY);
+
+    double fx = 1 / scale;
+    resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR_EXACT);
+    equalizeHist(smallImg, smallImg);
+
+    cascade.detectMultiScale(smallImg, faces,
+        1.1, 2, 0
+        //|CASCADE_FIND_BIGGEST_OBJECT
+        //|CASCADE_DO_ROUGH_SEARCH
+        | CASCADE_SCALE_IMAGE,
+        Size(30, 30));
+    if (tryflip)
+    {
+        flip(smallImg, smallImg, 1);
+        cascade.detectMultiScale(smallImg, faces2,
+            1.1, 2, 0
+            //|CASCADE_FIND_BIGGEST_OBJECT
+            //|CASCADE_DO_ROUGH_SEARCH
+            | CASCADE_SCALE_IMAGE,
+            Size(30, 30));
+        for (vector<Rect>::const_iterator r = faces2.begin(); r != faces2.end(); ++r)
+        {
+            faces.push_back(Rect(smallImg.cols - r->x - r->width, r->y, r->width, r->height));
+        }
+    }
+
+    for (size_t i = 0; i < faces.size(); i++)
+    {
+        Rect r = faces[i];
+        Mat smallImgROI;
+        vector<Rect> nestedObjects;
+        Point center;
+        Scalar color = colors[i % 8];
+        int radius;
+
+        double aspect_ratio = (double)r.width / r.height;
+        if (0.75 < aspect_ratio && aspect_ratio < 1.3)
+        {
+            resize(img, imgSticker, Size(), 0.3, 0.3);
+            overlayImage(&img, &imgSticker, Point(r.x, r.y));
+        }
+
+        const int half_height = cvRound((float)r.height / 2);
+        r.y = r.y + half_height;
+        r.height = half_height - 1;
+        smallImgROI = smallImg(r);
+        nestedCascade.detectMultiScale(smallImgROI, nestedObjects,
+            1.1, 0, 0
+            //|CASCADE_FIND_BIGGEST_OBJECT
+            //|CASCADE_DO_ROUGH_SEARCH
+            //|CASCADE_DO_CANNY_PRUNING
+            | CASCADE_SCALE_IMAGE,
+            Size(30, 30));
+    }
+
+    imshow("result", img);
+}
 //-------------------------------------------------------------------------------
 
 //FILTROS
+// MENOS BRILHO
+void filtroEscuro(Mat& imgOrigem, Mat& imgSaida) {
+    imgOrigem = imgFotoAtualColorida.clone();
+    convertScaleAbs(imgOrigem, imgSaida, 0.5, 0.0);
+}
 //GRAYSCALE
 void filtroCinza(Mat& imgOrigem, Mat& imgSaida) {
     imgOrigem = imgFotoAtualColorida.clone();
@@ -128,6 +211,11 @@ void filtroLaplace(Mat& imgOrigem, Mat& imgSaida) {
     cvtColor(imgOrigem, src_gray, COLOR_BGR2GRAY); // Convert the image to grayscale
     Laplacian(src_gray, dst, ddepth, kernel_size, scale, delta, BORDER_DEFAULT);
     convertScaleAbs(dst, imgSaida);
+}
+// MAIS BRILHO
+void filtroClaro(Mat& imgOrigem, Mat& imgSaida) {
+    imgOrigem = imgFotoAtualColorida.clone();
+    convertScaleAbs(imgOrigem, imgSaida, 1.0, 50.0);
 }
 //BLUR
 void filtroBlur(Mat& imgOrigem, Mat& imgSaida) {
@@ -237,9 +325,39 @@ void filtroBinario(Mat& imgOrigem, Mat& imgSaida) {
     //Binary threshold
     threshold(imgOrigem, imgSaida, thresh, maxValue, THRESH_BINARY);
 }
+//ERODE
+void filtroErode(Mat& imgOrigem, Mat& imgSaida) {
+    imgOrigem = imgFotoAtualColorida.clone();
+    Mat imgDilate;
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(5, 5));
+    dilate(imgOrigem, imgDilate, kernel);
+    erode(imgDilate, imgSaida, kernel);
+}
+//ENHANCE
+void filtroEnhance(Mat& imgOrigem, Mat& imgSaida){
+    imgOrigem = imgFotoAtualColorida.clone();
+    detailEnhance(imgOrigem, imgSaida);
+}
+//PENCILGRAY
+void filtroPencilGray(Mat& imgOrigem, Mat& imgSaida){
+    Mat img1;
+    imgOrigem = imgFotoAtualColorida.clone();
+    pencilSketch(imgOrigem, img1, imgSaida, 10, 0.1f, 0.03f);
+}
+//PENCIL
+void filtroPencil(Mat& imgOrigem, Mat& imgSaida){
+    Mat img;
+    imgOrigem = imgFotoAtualColorida.clone();
+    pencilSketch(imgOrigem, imgSaida, img, 10, 0.1f, 0.03f);
+}
+//STYLIZATION
+void filtroStylization(Mat& imgOrigem, Mat& imgSaida){
+    imgOrigem = imgFotoAtualColorida.clone();
+    stylization(imgOrigem, imgSaida);
+}
 
 //---------------------------------------------------------------------------
-//FUN«√O PARA APLICA«√O DE STICKERS NA FOTO
+//FUN√á√ÉO PARA APLICA√á√ÉO DE STICKERS NA FOTO
 void aplicaSticker(double x, double y) {
 
     if (sticker == NENHUM) {
@@ -247,127 +365,159 @@ void aplicaSticker(double x, double y) {
     }
     else if (sticker == OLHOS) {
         cout << "Aplicando sticker olhos" << endl;
-        resize(imgOlhos, imgSticker, Size(100, 50));
-        overlayImage(&imgFotoAtual, &imgSticker, Point(x - 350 - 50, y - 50 - 25));//posiÁ„o - desloc da foto no fundo - desloc do sticker
-        overlayImage(&imgFotoAtualColorida, &imgSticker, Point(x - 350 - 50, y - 50 - 25));
-        sticker = NENHUM;
+        resize(imgOlhos, imgSticker, Size(200, 75));
+        overlayImage(&imgFotoAtual, &imgSticker, Point(x - 350 - 100, y - 50 - 35));//posi√ß√£o - desloc da foto no fundo - desloc do sticker
+        overlayImage(&imgFotoAtualColorida, &imgSticker, Point(x - 350 - 100, y - 50 - 35));
     }
     else if (sticker == GOTAS) {
         cout << "Aplicando sticker gotas" << endl;
         resize(imgGotas, imgSticker, Size(300, 200));
         overlayImage(&imgFotoAtual, &imgSticker, Point(x - 350 - 150, y - 50 - 100));
         overlayImage(&imgFotoAtualColorida, &imgSticker, Point(x - 350 - 100, y - 50 - 125));
-        sticker = NENHUM;
     }
     else if (sticker == FOGOS) {
         cout << "Aplicando sticker fogos" << endl;
         resize(imgFogos, imgSticker, Size(150, 150));
         overlayImage(&imgFotoAtual, &imgSticker, Point(x - 350 - 75, y - 50 - 75));
         overlayImage(&imgFotoAtualColorida, &imgSticker, Point(x - 350 - 75, y - 50 - 75));
-        sticker = NENHUM;
     }
     else if (sticker == FLOWER) {
         cout << "Aplicando sticker flower" << endl;
         resize(imgFlower, imgSticker, Size(250, 200));
         overlayImage(&imgFotoAtual, &imgSticker, Point(x - 350 - 125, y - 50 - 100));
         overlayImage(&imgFotoAtualColorida, &imgSticker, Point(x - 350 - 125, y - 50 - 100));
-        sticker = NENHUM;
     }
     else if (sticker == COOL) {
         cout << "Aplicando sticker cool" << endl;
         resize(imgCool, imgSticker, Size(120, 120));
         overlayImage(&imgFotoAtual, &imgSticker, Point(x - 350 - 60, y - 50 - 60));
         overlayImage(&imgFotoAtualColorida, &imgSticker, Point(x - 350 - 60, y - 50 - 60));
-        sticker = NENHUM;
     }
 }
 
 //---------------------------------------------------------------------------
-//CONFIGURA«√O DO MENU DE SELE«√O DE FILTROS E STICKERS
+//CONFIGURA√á√ÉO DO MENU DE SELE√á√ÉO DE FILTROS E STICKERS
 void setupMenu() {
     Mat imgBotao1, imgBotao2, imgBotao3;
-    //SETUP DOS BOT’ES DE MENU
+    //SETUP DOS BOT√ïES DE MENU
     imgBotao1 = imread("textures/botao1.jpg");
     resize(imgBotao1, imgBotao1, Size(90, 45));
     imgBotao2 = imread("textures/botao2.jpg");
-    resize(imgBotao2, imgBotao2, Size(45, 45));
+    resize(imgBotao2, imgBotao2, Size(50, 45));
     imgBotao3 = imread("textures/botao3.jpg");
     resize(imgBotao3, imgBotao3, Size(90, 45));
-    //FORMATA EM RGBA E DESENHA OS BOT√OS SOBRE O FUNDO    
+    //FORMATA EM RGBA E DESENHA OS BOT√ÉOS SOBRE O FUNDO    
     cvtColor(imgBotao1, imgBotao1, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgBotao1, Point(505.0, 2.5));
+    overlayImage(&imgFundo, &imgBotao1, Point(350.0, 2.5));
     cvtColor(imgBotao2, imgBotao2, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgBotao2, Point(752.5, 277.5));
+    overlayImage(&imgFundo, &imgBotao2, Point(525.0, 2.5));
     cvtColor(imgBotao3, imgBotao3, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgBotao3, Point(505.0, 552.5));
+    overlayImage(&imgFundo, &imgBotao3, Point(660.0, 2.5));
 
     //SETUP DAS MINIATURAS DE FILTROS
+    filtroEscuro(imgFotoOriginal, imgFotoMiniatura);
+    resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
+    cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(50.0, 0.0));
+    //
     filtroCinza(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(125.0, 50.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(50.0, 100.0));
     //
     filtroNegativo(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(125.0, 150.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(50.0, 200.0));
     //
     filtroCanny(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(125.0, 250.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(50.0, 300.0));
     //
     filtroSobel(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(125.0, 350.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(50.0, 400.0));
     //
     filtroLaplace(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(125.0, 450.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(50.0, 500.0));
+    //
+    filtroClaro(imgFotoOriginal, imgFotoMiniatura);
+    resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
+    cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(140.0, 0.0));
     //
     filtroBlur(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(215.0, 50.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(140.0, 100.0));
     //
     filtroQuente(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(215.0, 150.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(140.0, 200.0));
     //
     filtroFrio(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(215.0, 250.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(140.0, 300.0));
     //
     filtroMoon(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(215.0, 350.0));
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(140.0, 400.0));
     //
     filtroBinario(imgFotoOriginal, imgFotoMiniatura);
     resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
     cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
-    overlayImage(&imgFundo, &imgFotoMiniatura, Point(215.0, 450.0));
-
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(140.0, 500.0));
+    //
+    filtroErode(imgFotoOriginal, imgFotoMiniatura);
+    resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
+    cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(230.0, 0.0));
+    //
+    filtroEnhance(imgFotoOriginal, imgFotoMiniatura);
+    resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
+    cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(230.0, 100.0));
+    //
+    filtroPencilGray(imgFotoOriginal, imgFotoMiniatura);
+    resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
+    cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(230.0, 200.0));
+    //
+    filtroPencil(imgFotoOriginal, imgFotoMiniatura);
+    resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
+    cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(230.0, 300.0));
+    //
+    filtroStylization(imgFotoOriginal, imgFotoMiniatura);
+    resize(imgFotoMiniatura, imgFotoMiniatura, Size(85, 100));
+    cvtColor(imgFotoMiniatura, imgFotoMiniatura, COLOR_BGR2BGRA);
+    overlayImage(&imgFundo, &imgFotoMiniatura, Point(230.0, 400.0));
+    //
+    
     //REDIMENSIONA AS MINIATURAS DOS STICKERS E DESENHA SOBRE O FUNDO    
-    resize(imgOlhos, imgSt1, Size(65, 40));
-    resize(imgGotas, imgSt2, Size(65, 80));
-    resize(imgFogos, imgSt3, Size(65, 80));
-    resize(imgFlower, imgSt4, Size(65, 80));
-    resize(imgCool, imgSt5, Size(65, 80));
-    overlayImage(&imgFundo, &imgSt1, Point(50.0, 60.0));
-    overlayImage(&imgFundo, &imgSt2, Point(50.0, 155.0));
-    overlayImage(&imgFundo, &imgSt3, Point(50.0, 260.0));
-    overlayImage(&imgFundo, &imgSt4, Point(50.0, 365.0));
-    overlayImage(&imgFundo, &imgSt5, Point(50.0, 470.0));
+    resize(imgOlhos, imgSt1, Size(60, 35));
+    resize(imgGotas, imgSt2, Size(70, 40));
+    resize(imgFlower, imgSt3, Size(60, 40));
+    resize(imgFogos, imgSt4, Size(60, 40));
+    resize(imgCool, imgSt5, Size(50, 40));
+    overlayImage(&imgFundo, &imgSt1, Point(355.0, 555));
+    overlayImage(&imgFundo, &imgSt2, Point(435.0, 555));
+    overlayImage(&imgFundo, &imgSt3, Point(515.0, 555));
+    overlayImage(&imgFundo, &imgSt4, Point(595.0, 555));
+    overlayImage(&imgFundo, &imgSt5, Point(675.0, 555));
 }
 
 //---------------------------------------------------------------------------
 //ABRE A CAPTURA DE VIDEO
 void alteraCamera(){
+
     Mat image;
     VideoCapture capture;
     capture.open(0);
@@ -379,19 +529,39 @@ void alteraCamera(){
             capture >> image;
             if (image.empty())
                 break;
-            //imshow("Sample", image);
-            //imgFotoAtual = image;
-            resize(image, image, Size(400, 500));
-            cvtColor(image, image, COLOR_BGR2BGRA);
-            imgFotoAtual = image.clone();
-            imgFotoAtualColorida = image.clone();
-            overlayImage(&imgFundo, &imgFotoAtual, Point(350.0, 50.0));
-            imshow("MainWindow", imgFundo);
-            if (!ligaCamera)
-                break;
 
-            if (waitKey(10) >= 0)
-                break;            
+            resize(image, image, Size(400, 500));           
+            imgFotoAtualColorida = image.clone();
+                       
+            if (filtro == F1) { filtroEscuro(image, image); }
+            if (filtro == F2) { filtroCinza(image, image); }
+            if (filtro == F3) { filtroNegativo(image, image); }
+            if (filtro == F4) { filtroCanny(image, image); }
+            if (filtro == F5) { filtroSobel(image, image); }
+            if (filtro == F6) { filtroLaplace(image, image); }
+            if (filtro == F7) { filtroClaro(image, image); }
+            if (filtro == F8) { filtroBlur(image, image); }
+            if (filtro == F9) { filtroQuente(image, image); }
+            if (filtro == F10) { filtroFrio(image, image); }
+            if (filtro == F11) { filtroMoon(image, image); }
+            if (filtro == F12) { filtroBinario(image, image); }
+            if (filtro == F13) { filtroErode(image, image); }
+            if (filtro == F14) { filtroEnhance(image, image); }
+            if (filtro == F15) { filtroPencilGray(image, image); }
+            if (filtro == F16) { filtroPencil(image, image); }
+            if (filtro == F17) { filtroStylization(image, image); }
+            if (filtro == F18) { filtroStylization(image, image); }      
+
+
+            imgFotoAtual = image.clone();
+            cvtColor(image, image, COLOR_BGR2BGRA);
+            overlayImage(&imgFundo, &image, Point(350.0, 50.0));
+            imshow("PG - Trabalho Pratico Grau B - Rafaela Cunha Werle", imgFundo);
+                      
+            
+            if (!cam || waitKey(10) >= 0) {                
+                break;
+            }            
         }
     }
     else
@@ -402,9 +572,7 @@ void alteraCamera(){
         waitKey(0);
     }
 }
-
-//---------------------------------------------------------------------------
-//FUN«√O PARA SALVAR IMAGEM ALTERADA EM ARQUIVO.JPG
+//FUN√á√ÉO PARA SALVAR IMAGEM ALTERADA EM ARQUIVO.JPG
 void salvaImagem() {
 
     String nomeImg = "";
@@ -423,9 +591,16 @@ void salvaImagem() {
         break;
     }
 }
+//RESET
+void reset() {
+    imgFotoAtual = imgFotoOriginal.clone();
+    imgFotoAtualColorida = imgFotoOriginal.clone();
+    filtro = F0;
+    sticker = NENHUM;
+}
 
 //---------------------------------------------------------------------------
-//M…TODO DE CAPTURA DO MOUSE
+//M√âTODO DE CAPTURA DO MOUSE
 static void mouseCallback(int event, int x, int y, int flags, void* userdata) {
 
     if (event == EVENT_LBUTTONDOWN) {
@@ -435,98 +610,178 @@ static void mouseCallback(int event, int x, int y, int flags, void* userdata) {
         mousey = y;
         cout << "lalalalalaal" << endl;
 
-        //analisar onde foi clicado, e selecionar aÁ„o a ser tomada.
-        //A«’ES FILTROS
-        if (x > 145.0 && x < 145.0 + 65.0 && y > 50.0 && y < 50.0 + 100.0) { //filtro 1
-            filtroCinza(imgFotoAtual, imgFotoAtual);
+        //analisar onde foi clicado, e selecionar a√ß√£o a ser tomada.
+        //A√á√ïES FILTROS
+        if (x > 50.0 && x < 50.0 + 85.0 && y > 0.0 && y < 0.0 + 100.0) { //filtro 1
+            if(cam)
+                filtro = F1;
+            else
+                filtroEscuro(imgFotoAtual, imgFotoAtual);
         }
-        else if (x > 125.0 && x < 125.0 + 85.0 && y > 150.0 && y < 150.0 + 100.0) { //filtro 2
-            filtroNegativo(imgFotoAtual, imgFotoAtual);
+        else if (x > 50.0 && x < 50.0 + 85.0 && y > 100.0 && y < 100.0 + 100.0) { //filtro 2
+            if(cam)
+                filtro = F2;
+            else
+                filtroCinza(imgFotoAtual, imgFotoAtual);
         }
-        else if (x > 125.0 && x < 125.0 + 85.0 && y > 250.0 && y < 250.0 + 100.0) { //filtro 3
-            filtroCanny(imgFotoAtual, imgFotoAtual);
+        else if (x > 50.0 && x < 50.0 + 85.0 && y > 200.0 && y < 200.0 + 100.0) { //filtro 3
+            if(cam)
+                filtro = F3;
+            else
+                filtroNegativo(imgFotoAtual, imgFotoAtual);
         }
-        else if (x > 125.0 && x < 125.0 + 85.0 && y > 350.0 && y < 350.0 + 100.0) { //filtro 4
-            filtroSobel(imgFotoAtual, imgFotoAtual);
+        else if (x > 50.0 && x < 50.0 + 85.0 && y > 300.0 && y < 300.0 + 100.0) { //filtro 4
+            if (cam)
+                filtro = F4;
+            else
+                filtroCanny(imgFotoAtual, imgFotoAtual);
         }
-        else if (x > 125.0 && x < 125.0 + 85.0 && y > 450.0 && y < 450.0 + 100.0) { //filtro 5            
-            filtroLaplace(imgFotoAtual, imgFotoAtual);
+        else if (x > 50.0 && x < 50.0 + 85.0 && y > 400.0 && y < 400.0 + 100.0) { //filtro 5
+            if (cam)
+                filtro = F5;
+            else
+                filtroSobel(imgFotoAtual, imgFotoAtual);
         }
-        if (x > 215.0 && x < 215.0 + 85.0 && y > 50.0 && y < 50.0 + 100.0) { //filtro 6
-            filtroBlur(imgFotoAtual, imgFotoAtual);
+        else if (x > 50.0 && x < 50.0 + 85.0 && y > 500.0 && y < 500.0 + 100.0) { //filtro 6            
+            if (cam)
+                filtro = F6;
+            else
+                filtroLaplace(imgFotoAtual, imgFotoAtual);
         }
-        else if (x > 215.0 && x < 215.0 + 85.0 && y > 150.0 && y < 150.0 + 100.0) { //filtro 7
-            filtroQuente(imgFotoAtual, imgFotoAtual);
+        else if (x > 140.0 && x < 140.0 + 85.0 && y > 0.0 && y < 0.0 + 100.0) { //filtro 7
+            if (cam)
+                filtro = F7;
+            else
+                filtroClaro(imgFotoAtual, imgFotoAtual);
         }
-        else if (x > 215.0 && x < 215.0 + 85.0 && y > 250.0 && y < 250.0 + 100.0) { //filtro 8
-            filtroFrio(imgFotoAtual, imgFotoAtual);
+        else if (x > 140.0 && x < 140.0 + 85.0 && y > 100.0 && y < 100.0 + 100.0) { //filtro 8
+            if (cam)
+                filtro = F8;
+            else
+                filtroBlur(imgFotoAtual, imgFotoAtual);
         }
-        else if (x > 215.0 && x < 215.0 + 85.0 && y > 350.0 && y < 350.0 + 100.0) { //filtro 9
-            filtroMoon(imgFotoAtual, imgFotoAtual);
+        else if (x > 140.0 && x < 140.0 + 85.0 && y > 200.0 && y < 200.0 + 100.0) { //filtro 9
+            if (cam)
+                filtro = F9;
+            else
+                filtroQuente(imgFotoAtual, imgFotoAtual);
         }
-        else if (x > 215.0 && x < 215.0 + 85.0 && y > 450.0 && y < 450.0 + 100.0) { //filtro 10
-            filtroBinario(imgFotoAtual, imgFotoAtual);
+        else if (x > 140.0 && x < 140.0 + 85.0 && y > 300.0 && y < 300.0 + 100.0) { //filtro 10
+            if (cam)
+                filtro = F10;
+            else
+                filtroFrio(imgFotoAtual, imgFotoAtual);
         }
+        else if (x > 140.0 && x < 140.0 + 85.0 && y > 400.0 && y < 400.0 + 100.0) { //filtro 11
+            if (cam)
+                filtro = F11;
+            else
+                filtroMoon(imgFotoAtual, imgFotoAtual);
+        }
+        else if (x > 140.0 && x < 140.0 + 85.0 && y > 500.0 && y < 500.0 + 100.0) { //filtro 12
+            if (cam)
+                filtro = F12;
+            else
+                filtroBinario(imgFotoAtual, imgFotoAtual);
+        }
+        else if (x > 230.0 && x < 230.0 + 85.0 && y > 0.0 && y < 0.0 + 100.0) { //filtro 13
+            if (cam)
+                filtro = F13;
+            else
+                filtroErode(imgFotoAtual, imgFotoAtual);
+        }
+        else if (x > 230.0 && x < 230.0 + 85.0 && y > 100.0 && y < 100.0 + 100.0) { //filtro 14
+            if (cam)
+                filtro = F14;
+            else
+                filtroEnhance(imgFotoAtual, imgFotoAtual);
+        }
+        else if (x > 230.0 && x < 230.0 + 85.0 && y > 200.0 && y < 200.0 + 100.0) { //filtro 15
+            if (cam)
+                filtro = F15;
+            else
+                filtroPencilGray(imgFotoAtual, imgFotoAtual);
+        }
+        else if (x > 230.0 && x < 230.0 + 85.0 && y > 300.0 && y < 300.0 + 100.0) { //filtro 16
+            if (cam)
+                filtro = F16;
+            else
+                filtroPencil(imgFotoAtual, imgFotoAtual);
+        }
+        else if (x > 230.0 && x < 230.0 + 85.0 && y > 400.0 && y < 400.0 + 100.0) { //filtro 17
+            if (cam)
+                filtro = F17;
+            else
+                filtroStylization(imgFotoAtual, imgFotoAtual);
+        }
+        
 
-        //A«’ES BOT’ES
-        else if (x > 505.0 && x < 505.0 + 90.0 && y > 2.5 && y < 2.5 + 45.0) { //mudar cam/foto
-            if (!ligaCamera) {
-                ligaCamera = true;
+        //A√á√ïES BOT√ïES
+        else if (x > 350.0 && x < 350.0 + 90.0 && y > 2.5 && y < 2.5 + 45.0) { //mudar cam/foto
+            filtro = F0;
+            if (!cam) {
+                cam = true;
                 alteraCamera();
             }
             else {
-                ligaCamera = false;
+                cam = false;
             }
-
         }
-        else if (x > 505.0 && x < 505.0 + 90.0 && y > 552.5 && y < 552.5 + 45.0) { //salvar imagem
+        else if (x > 525.0 && x < 525.0 + 50.0 && y>2.5 && y < 2.5 + 45.0) { //reverter tudo
+            if (!cam)
+                reset();
+        }
+        else if (x > 660.0 && x < 660.0 + 90.0 && y > 2.5 && y <2.5 + 45.0) { //salvar imagem
             salvaImagem();
-        }
-        else if (x > 752.5 && x < 752.5 + 45.0 && y>277.5 && y < 277.5 + 45.0) { //reverter tudo
-            imgFotoAtual = imgFotoOriginal.clone();
-            imgFotoAtualColorida = imgFotoOriginal.clone();
-        }
+        }        
 
-        //A«’ES STICKERS
-        else if (x > 50.0 && x < 50.0 + 65 && y > 50.0 && y < 50.0 + 80.0) { //olhos
+        //A√á√ïES STICKERS
+        else if (x > 355.0 && x < 355.0 + 65 && y > 555.0 && y < 555.0 + 40.0) { //olhos
            sticker = OLHOS;
         }
-        else if (x > 50.0 && x < 50.0 + 65 && y > 155.0 && y < 155.0 + 80.0) { //gotas
+        else if (x > 435.0 && x < 435.0 + 65 && y > 555.0 && y < 555.0 + 40.0) { //gotas
            sticker = GOTAS;
         }
-        else if (x > 50.0 && x < 50.0 + 65 && y > 260.0 && y < 260.0 + 80.0) { //fogos
-           sticker = FOGOS;
-        }
-        else if (x > 50.0 && x < 50.0 + 65 && y > 365.0 && y < 365.0 + 80.0) { //flower
+        else if (x > 515.0 && x < 515.0 + 65 && y > 555.0 && y < 555.0 + 40.0) { //fogos
            sticker = FLOWER;
         }
-        else if (x > 50.0 && x < 50.0 + 65 && y > 470.0 && y < 470.0 + 80.0) { //cool
+        else if (x > 595.0 && x < 595.0 + 65 && y > 555.0 && y < 555.0 + 40.0) { //flower
+           sticker = FOGOS;
+        }
+        else if (x > 675.0 && x < 675.0 + 65 && y > 555.0 && y < 555.0 + 40.0) { //cool
            sticker = COOL;
         }
         //area da foto
         else if (x > 350.0 && x < 350.0 + 400.0 && y > 50.0 && y < 50.0 + 500.0) {
           aplicaSticker(mousex, mousey);
+          sticker = NENHUM;
         }
-
-        cvtColor(imgFotoAtual, imgFotoAtual, COLOR_BGR2BGRA);         
-        overlayImage(&imgFundo, &imgFotoAtual, Point(350.0, 50.0));
-        imshow("MainWindow", imgFundo);
+        if (!cam) {
+            cvtColor(imgFotoAtual, imgFotoAtual, COLOR_BGR2BGRA);
+            overlayImage(&imgFundo, &imgFotoAtual, Point(350.0, 50.0));
+            imshow("PG - Trabalho Pratico Grau B - Rafaela Cunha Werle", imgFundo);
+        }
     }
 }
 
 //---------------------------------------------------------------------------
-//M…TODO MAIN
+//M√âTODO MAIN
 int main()
 {
-    cout << "Built with OpenCV " << CV_VERSION << endl;
+    String text = "";
+    cout << "Digite o nome da imagem desejada: ";
+    getline(cin, text);
 
-    //CARREGAMENTO E DIMENSIONAMENTO DO FUNDO PRINCIPAL E DA FOTO PARA EDI«√O.
+    String nomeImg = "textures/" + text + ".jpg";
+    
+
+    //CARREGAMENTO E DIMENSIONAMENTO DO FUNDO PRINCIPAL E DA FOTO PARA EDI√á√ÉO.
     imgFundo = imread("textures/fundo.jpg");
-    imgFotoOriginal = imread("textures/foto.jpg");
+    imgFotoOriginal = imread(nomeImg);
     resize(imgFundo, imgFundo, Size(800, 600));
     resize(imgFotoOriginal, imgFotoOriginal, Size(400, 500));
     imgFotoAtual = imgFotoOriginal.clone();
-    imgFotoAtualColorida = imgFotoOriginal.clone();
+    imgFotoAtualColorida = imgFotoOriginal.clone();    
 
     //-------------------------------------------------------------
     //CARREGAMENTO DOS STICKERS
@@ -537,20 +792,20 @@ int main()
     imgCool = imread("textures/cool.png", IMREAD_UNCHANGED);
 
     //--------------------------------------------------------------
-    //CARREGA MENU DE MINIATURAS PARA SELE«√O
+    //CARREGA MENU DE MINIATURAS PARA SELE√á√ÉO
     setupMenu();
 
     //--------------------------------------------------------------
-    //CONVERS√O DAS IMAGENS DE FUNDO E PRINCIPAL PARA RGBA E DESENHA A FOTO SOBRE O FUNDO
+    //CONVERS√ÉO DAS IMAGENS DE FUNDO E PRINCIPAL PARA RGBA E DESENHA A FOTO SOBRE O FUNDO
     cvtColor(imgFundo, imgFundo, COLOR_BGR2BGRA);
     cvtColor(imgFotoOriginal, imgFotoOriginal, COLOR_BGR2BGRA);
     overlayImage(&imgFundo, &imgFotoOriginal, Point(350.0, 50.0));
 
     //--------------------------------------------------------------
     //VERIFICA MOUSE E DESENHA IMAGEM
-    namedWindow("MainWindow", WINDOW_AUTOSIZE);
-    imshow("MainWindow", imgFundo);
-    setMouseCallback("MainWindow", mouseCallback, NULL);
+    namedWindow("PG - Trabalho Pratico Grau B - Rafaela Cunha Werle", WINDOW_AUTOSIZE);
+    imshow("PG - Trabalho Pratico Grau B - Rafaela Cunha Werle", imgFundo);
+    setMouseCallback("PG - Trabalho Pratico Grau B - Rafaela Cunha Werle", mouseCallback, NULL);
    
 
     for (;;) {
