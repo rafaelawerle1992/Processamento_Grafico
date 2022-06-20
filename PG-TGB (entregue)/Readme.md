@@ -4,7 +4,7 @@ Processamento de imagens utilizando OpenCV
 
 <h2> Tela da Aplicação: </h2>
 
-- Criei 10 filtros possíveis, apenas um filtro por vez, com excessão do Blur e do Binário, que podem ser aplicados sobre os demais.
+- Criei 17 filtros possíveis, apenas um filtro por vez, com excessão do Blur e do Binário, que podem ser aplicados sobre os demais.
 - Criei 5 opções de Sticker, com tamanho pré-definido. É necesário selecionar o Sticker e depois clicar na foto para aplicar.
 - Criei 3 botões de menu: Salvar, Reverter, Alternar Foto/Camera.
 
