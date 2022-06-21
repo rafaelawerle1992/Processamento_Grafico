@@ -527,105 +527,88 @@ static void mouseCallback(int event, int x, int y, int flags, void* userdata) {
         //analisar onde foi clicado, e selecionar ação a ser tomada.
         //AÇÕES FILTROS
         if (x > 50.0 && x < 50.0 + 85.0 && y > 0.0 && y < 0.0 + 100.0) { //filtro 1
-            if(cam)
-                filtro = F1;
-            else
+            filtro = F1;
+            if (!cam)
                 filtroEscuro(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 50.0 && x < 50.0 + 85.0 && y > 100.0 && y < 100.0 + 100.0) { //filtro 2
-            if(cam)
-                filtro = F2;
-            else
+            filtro = F2;
+            if (!cam)
                 filtroCinza(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 50.0 && x < 50.0 + 85.0 && y > 200.0 && y < 200.0 + 100.0) { //filtro 3
-            if(cam)
-                filtro = F3;
-            else
+            filtro = F3;
+            if (!cam)
                 filtroNegativo(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 50.0 && x < 50.0 + 85.0 && y > 300.0 && y < 300.0 + 100.0) { //filtro 4
-            if (cam)
-                filtro = F4;
-            else
+            filtro = F4;
+            if (!cam)
                 filtroCanny(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 50.0 && x < 50.0 + 85.0 && y > 400.0 && y < 400.0 + 100.0) { //filtro 5
-            if (cam)
-                filtro = F5;
-            else
+            filtro = F5;
+            if (!cam)
                 filtroSobel(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 50.0 && x < 50.0 + 85.0 && y > 500.0 && y < 500.0 + 100.0) { //filtro 6            
-            if (cam)
-                filtro = F6;
-            else
+            filtro = F6;
+            if (!cam)
                 filtroLaplace(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 140.0 && x < 140.0 + 85.0 && y > 0.0 && y < 0.0 + 100.0) { //filtro 7
-            if (cam)
-                filtro = F7;
-            else
+            filtro = F7;
+            if (!cam)
                 filtroClaro(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 140.0 && x < 140.0 + 85.0 && y > 100.0 && y < 100.0 + 100.0) { //filtro 8
-            if (cam)
-                filtro = F8;
-            else
+            filtro = F8;
+            if (!cam)
                 filtroBlur(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 140.0 && x < 140.0 + 85.0 && y > 200.0 && y < 200.0 + 100.0) { //filtro 9
-            if (cam)
-                filtro = F9;
-            else
+            filtro = F9;
+            if (!cam)
                 filtroQuente(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 140.0 && x < 140.0 + 85.0 && y > 300.0 && y < 300.0 + 100.0) { //filtro 10
-            if (cam)
-                filtro = F10;
-            else
+            filtro = F10;
+            if (!cam)
                 filtroFrio(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 140.0 && x < 140.0 + 85.0 && y > 400.0 && y < 400.0 + 100.0) { //filtro 11
-            if (cam)
-                filtro = F11;
-            else
+            filtro = F11;
+            if (!cam)
                 filtroMoon(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 140.0 && x < 140.0 + 85.0 && y > 500.0 && y < 500.0 + 100.0) { //filtro 12
-            if (cam)
-                filtro = F12;
-            else
+            filtro = F12;
+            if (!cam)
                 filtroBinario(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 230.0 && x < 230.0 + 85.0 && y > 0.0 && y < 0.0 + 100.0) { //filtro 13
-            if (cam)
-                filtro = F13;
-            else
+            filtro = F13;
+            if (!cam)
                 filtroErode(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 230.0 && x < 230.0 + 85.0 && y > 100.0 && y < 100.0 + 100.0) { //filtro 14
-            if (cam)
-                filtro = F14;
-            else
+            filtro = F14;
+            if (!cam)
                 filtroEnhance(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 230.0 && x < 230.0 + 85.0 && y > 200.0 && y < 200.0 + 100.0) { //filtro 15
-            if (cam)
-                filtro = F15;
-            else
+            filtro = F15;
+            if (!cam)
                 filtroPencilGray(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 230.0 && x < 230.0 + 85.0 && y > 300.0 && y < 300.0 + 100.0) { //filtro 16
-            if (cam)
-                filtro = F16;
-            else
+            filtro = F16;
+            if (!cam)
                 filtroPencil(imgFotoAtual, imgFotoAtual);
         }
         else if (x > 230.0 && x < 230.0 + 85.0 && y > 400.0 && y < 400.0 + 100.0) { //filtro 17
-            if (cam)
-                filtro = F17;
-            else
+            filtro = F17;
+            if (!cam)
                 filtroStylization(imgFotoAtual, imgFotoAtual);
         }
         
