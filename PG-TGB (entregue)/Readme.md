@@ -15,7 +15,7 @@ Ao abrir a aplicação é necessário inserir o nome da imagem para abrir. A ima
 ![image](https://user-images.githubusercontent.com/58199187/174691537-50d2d268-58a4-4698-9472-dbeeb946adc7.png)
 
 
-Para aplicar os filtros basta clicar nas miniaturas:
+Para aplicar os filtros basta clicar nas miniaturas. Os filtros são sobrepostos (com exceção dos últimos 4). Para desfazer os filtros é necessário redefinir a imagem clicando no botão "reset". 
 
 ![image](https://user-images.githubusercontent.com/58199187/174691560-132a4fb7-90bf-4616-a9c4-d124152dd94f.png)
 
