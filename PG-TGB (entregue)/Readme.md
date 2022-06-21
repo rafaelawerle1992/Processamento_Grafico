@@ -27,7 +27,7 @@ Mais Brilho  /  Blur   /  Tons Quentes / Tons Frios / Moon  /  Binarização
 
 ![image](https://user-images.githubusercontent.com/58199187/174693966-19e1a06e-6185-4f88-b5c3-fabaead61b6b.png) ![image](https://user-images.githubusercontent.com/58199187/174694180-f7058c63-b449-43f8-9017-d1babb9a31f9.png) ![image](https://user-images.githubusercontent.com/58199187/174694198-9cf9a8f4-16f9-48ec-ae77-bde158eaaaa8.png) ![image](https://user-images.githubusercontent.com/58199187/174694216-2ca2bc82-b1c8-4c45-9fad-c57d7f779d45.png) ![image](https://user-images.githubusercontent.com/58199187/174694229-206d403c-141e-43ae-97ef-5a1d3415e56c.png) ![image](https://user-images.githubusercontent.com/58199187/174694249-f891bb56-8ba4-4a23-b441-eef09cc872fe.png)
 
-Erode / Enhance / PencilGrayScale / Pencil / Stilização
+Erode / Enhance / Pencil / PencilGrayScale / Stilização
 
 ![image](https://user-images.githubusercontent.com/58199187/174694486-827653d0-b40a-4001-a12a-8264c15b5727.png) ![image](https://user-images.githubusercontent.com/58199187/174694499-e935cc23-754f-445a-a617-78b30a0404c9.png) ![image](https://user-images.githubusercontent.com/58199187/174694519-f02c6c53-b001-4712-a5d2-1e4ed5fe18b2.png) ![image](https://user-images.githubusercontent.com/58199187/174694539-b3b99603-7ad3-45a2-87cf-d42c164f8089.png) ![image](https://user-images.githubusercontent.com/58199187/174694561-577e0238-148d-408e-ba4e-958b531fad68.png)
 
