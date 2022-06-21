@@ -82,97 +82,19 @@ void interpolation(uchar* lut, float* curve, float* originalValue) {
         lut[i] = slope * a + constant;
     }
 }
-//FUNÇÃO DETECTAR FACE 
-void detectAndDraw(Mat& img, CascadeClassifier& cascade,CascadeClassifier& nestedCascade, double scale, bool tryflip)
-{
-    vector<Rect> faces, faces2;
-    const static Scalar colors[] =
-    {
-        Scalar(255,0,0),
-        Scalar(255,128,0),
-        Scalar(255,255,0),
-        Scalar(0,255,0),
-        Scalar(0,128,255),
-        Scalar(0,255,255),
-        Scalar(0,0,255),
-        Scalar(255,0,255)
-    };
-    Mat gray, smallImg;
-
-    cvtColor(img, gray, COLOR_BGR2GRAY);
-
-    double fx = 1 / scale;
-    resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR_EXACT);
-    equalizeHist(smallImg, smallImg);
-
-    cascade.detectMultiScale(smallImg, faces,
-        1.1, 2, 0
-        //|CASCADE_FIND_BIGGEST_OBJECT
-        //|CASCADE_DO_ROUGH_SEARCH
-        | CASCADE_SCALE_IMAGE,
-        Size(30, 30));
-    if (tryflip)
-    {
-        flip(smallImg, smallImg, 1);
-        cascade.detectMultiScale(smallImg, faces2,
-            1.1, 2, 0
-            //|CASCADE_FIND_BIGGEST_OBJECT
-            //|CASCADE_DO_ROUGH_SEARCH
-            | CASCADE_SCALE_IMAGE,
-            Size(30, 30));
-        for (vector<Rect>::const_iterator r = faces2.begin(); r != faces2.end(); ++r)
-        {
-            faces.push_back(Rect(smallImg.cols - r->x - r->width, r->y, r->width, r->height));
-        }
-    }
-
-    for (size_t i = 0; i < faces.size(); i++)
-    {
-        Rect r = faces[i];
-        Mat smallImgROI;
-        vector<Rect> nestedObjects;
-        Point center;
-        Scalar color = colors[i % 8];
-        int radius;
-
-        double aspect_ratio = (double)r.width / r.height;
-        if (0.75 < aspect_ratio && aspect_ratio < 1.3)
-        {
-            resize(img, imgSticker, Size(), 0.3, 0.3);
-            overlayImage(&img, &imgSticker, Point(r.x, r.y));
-        }
-
-        const int half_height = cvRound((float)r.height / 2);
-        r.y = r.y + half_height;
-        r.height = half_height - 1;
-        smallImgROI = smallImg(r);
-        nestedCascade.detectMultiScale(smallImgROI, nestedObjects,
-            1.1, 0, 0
-            //|CASCADE_FIND_BIGGEST_OBJECT
-            //|CASCADE_DO_ROUGH_SEARCH
-            //|CASCADE_DO_CANNY_PRUNING
-            | CASCADE_SCALE_IMAGE,
-            Size(30, 30));
-    }
-
-    imshow("result", img);
-}
 //-------------------------------------------------------------------------------
 
 //FILTROS
 // MENOS BRILHO
 void filtroEscuro(Mat& imgOrigem, Mat& imgSaida) {
-    imgOrigem = imgFotoAtualColorida.clone();
     convertScaleAbs(imgOrigem, imgSaida, 0.5, 0.0);
 }
 //GRAYSCALE
 void filtroCinza(Mat& imgOrigem, Mat& imgSaida) {
-    imgOrigem = imgFotoAtualColorida.clone();
     cvtColor(imgOrigem, imgSaida, COLOR_BGR2GRAY);
 }
 //NEGATIVE
 void filtroNegativo(Mat& imgOrigem, Mat& imgSaida) {
-    imgOrigem = imgFotoAtualColorida.clone();
     cvtColor(imgOrigem, imgSaida, COLOR_BGR2GRAY);
     for (int i = 0; i < imgSaida.rows; i++) {
         for (int j = 0; j < imgSaida.cols; j++) {
@@ -182,13 +104,11 @@ void filtroNegativo(Mat& imgOrigem, Mat& imgSaida) {
 }
 //CANNY
 void filtroCanny(Mat& imgOrigem, Mat& imgSaida) {
-    imgOrigem = imgFotoAtualColorida.clone();
-    cvtColor(imgOrigem, imgSaida, COLOR_BGR2GRAY);
+      cvtColor(imgOrigem, imgSaida, COLOR_BGR2GRAY);
     Canny(imgSaida, imgSaida, 50, 150);
 }
 //SOBEL
 void filtroSobel(Mat& imgOrigem, Mat& imgSaida) {
-    imgOrigem = imgFotoAtualColorida.clone();
     cvtColor(imgOrigem, imgSaida, COLOR_BGR2GRAY);
     Mat grad_x, grad_y;
     Mat abs_grad_x, abs_grad_y;
@@ -201,7 +121,6 @@ void filtroSobel(Mat& imgOrigem, Mat& imgSaida) {
 }
 //LAPLACE
 void filtroLaplace(Mat& imgOrigem, Mat& imgSaida) {
-    imgOrigem = imgFotoAtualColorida.clone();
     Mat src_gray, dst;
     int kernel_size = 3;
     int scale = 1;
@@ -214,7 +133,6 @@ void filtroLaplace(Mat& imgOrigem, Mat& imgSaida) {
 }
 // MAIS BRILHO
 void filtroClaro(Mat& imgOrigem, Mat& imgSaida) {
-    imgOrigem = imgFotoAtualColorida.clone();
     convertScaleAbs(imgOrigem, imgSaida, 1.0, 50.0);
 }
 //BLUR
@@ -224,7 +142,6 @@ void filtroBlur(Mat& imgOrigem, Mat& imgSaida) {
 //QUENTE
 void filtroQuente(Mat& imgOrigem, Mat& imgSaida) {
     
-    imgOrigem = imgFotoAtualColorida.clone();
     imgSaida = imgOrigem.clone();
 
     vector<Mat> channels;
@@ -254,7 +171,6 @@ void filtroQuente(Mat& imgOrigem, Mat& imgSaida) {
 //FRIO
 void filtroFrio(Mat& imgOrigem, Mat& imgSaida) {
 
-    imgOrigem = imgFotoAtualColorida.clone();
     imgSaida = imgOrigem.clone();
 
     vector<Mat> channels;
@@ -284,7 +200,6 @@ void filtroFrio(Mat& imgOrigem, Mat& imgSaida) {
 //MOON
 void filtroMoon(Mat& imgOrigem, Mat& imgSaida) {
 
-    imgOrigem = imgFotoAtualColorida.clone();
     imgSaida = imgOrigem.clone();
 
     cvtColor(imgOrigem, imgSaida, COLOR_BGR2Lab);
@@ -327,7 +242,6 @@ void filtroBinario(Mat& imgOrigem, Mat& imgSaida) {
 }
 //ERODE
 void filtroErode(Mat& imgOrigem, Mat& imgSaida) {
-    imgOrigem = imgFotoAtualColorida.clone();
     Mat imgDilate;
     Mat kernel = getStructuringElement(MORPH_RECT, Size(5, 5));
     dilate(imgOrigem, imgDilate, kernel);
@@ -338,13 +252,13 @@ void filtroEnhance(Mat& imgOrigem, Mat& imgSaida){
     imgOrigem = imgFotoAtualColorida.clone();
     detailEnhance(imgOrigem, imgSaida);
 }
-//PENCILGRAY
+//PENCIL
 void filtroPencilGray(Mat& imgOrigem, Mat& imgSaida){
     Mat img1;
     imgOrigem = imgFotoAtualColorida.clone();
     pencilSketch(imgOrigem, img1, imgSaida, 10, 0.1f, 0.03f);
 }
-//PENCIL
+//PENCILGRAY
 void filtroPencil(Mat& imgOrigem, Mat& imgSaida){
     Mat img;
     imgOrigem = imgFotoAtualColorida.clone();
@@ -769,7 +683,7 @@ static void mouseCallback(int event, int x, int y, int flags, void* userdata) {
 int main()
 {
     String text = "";
-    cout << "Digite o nome da imagem desejada: ";
+    cout << "Digite o nome da imagem .jpg: ";
     getline(cin, text);
 
     String nomeImg = "textures/" + text + ".jpg";
